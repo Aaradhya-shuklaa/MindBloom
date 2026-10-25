@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — MindBloom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#faf6ee;
+    --cream-deep:#f3ede0;
+    --ink:#2c2740;
+    --ink-soft:#5c5670;
+    --sage:#5c7a52;
+    --sage-deep:#4a6543;
+    --sage-pale:#dde8d2;
+    --blush:#e9c3cd;
+    --lavender:#cbc0e0;
+    --line:#e4ddc9;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  h1,h2,h3,.serif{
+    font-family:'Fraunces', serif;
+    color:var(--ink);
+    font-weight:500;
+    letter-spacing:-0.01em;
+  }
+  a{text-decoration:none; color:inherit;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 40px;
+    max-width:1180px; margin:0 auto; width:100%;
+  }
+  .logo{display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-size:20px; font-weight:600;}
+  .nav-links{display:flex; gap:34px; font-size:15px; color:var(--ink-soft);}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-right{display:flex; align-items:center; gap:22px;}
+  .nav-right .signin-link{font-size:15px; color:var(--ink);}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:12px 24px; border-radius:999px; font-size:15px; font-weight:500;
+    cursor:pointer; border:none; transition:transform .15s ease, background .15s ease;
+  }
+  .btn-primary{background:var(--sage); color:#fdfaf3;}
+  .btn-primary:hover{background:var(--sage-deep); transform:translateY(-1px);}
+  @media (max-width:880px){ .nav-links{display:none;} }
+
+  /* ---------- SHELL ---------- */
+  .signin-shell{
+    flex:1;
+    display:grid; grid-template-columns:1fr 1fr;
+  }
+
+  /* LEFT VISUAL PANEL */
+  .signin-visual{
+    position:relative;
+    background:linear-gradient(165deg, var(--sage-pale) 0%, var(--blush) 55%, var(--lavender) 100%);
+    display:flex; align-items:center; justify-content:center;
+    padding:60px;
+    overflow:hidden;
+  }
+  .blob{position:absolute; border-radius:50%; filter:blur(1px);}
+  .blob-1{width:260px; height:260px; background:var(--sage); opacity:.16; top:-70px; left:-70px;}
+  .blob-2{width:200px; height:200px; background:var(--lavender); opacity:.35; bottom:-40px; right:-50px;}
+  .blob-3{width:90px; height:90px; background:#fff; opacity:.3; top:20%; right:12%;}
+
+  .visual-stack{position:relative; z-index:2; width:100%; max-width:400px;}
+  .bloom-illustration{
+    width:100%; aspect-ratio:1.1/1; margin-bottom:26px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .bloom-illustration svg{width:80%; height:80%;}
+
+  .reminder-card{
+    background:#fff; border-radius:20px; padding:26px 28px;
+    box-shadow:0 30px 60px -20px rgba(44,39,64,0.25);
+  }
+  .reminder-card .tag{
+    display:inline-flex; align-items:center; gap:7px; background:var(--sage-pale);
+    color:var(--sage-deep); padding:6px 13px; border-radius:999px; font-size:12.5px; margin-bottom:16px;
+  }
+  .reminder-card h3{font-size:20px; line-height:1.4; margin-bottom:10px;}
+  .reminder-card p{font-size:14.5px; color:var(--ink-soft); line-height:1.6;}
+
+  /* RIGHT FORM PANEL */
+  .signin-form-side{
+    display:flex; align-items:center; justify-content:center; padding:60px 40px;
+  }
+  .signin-box{width:100%; max-width:380px;}
+  .signin-box .top-mark{
+    width:46px; height:46px; border-radius:50%; background:var(--sage-pale);
+    display:flex; align-items:center; justify-content:center; margin-bottom:26px;
+  }
+  .signin-box h1{font-size:32px; margin-bottom:10px;}
+  .signin-box .sub{color:var(--ink-soft); font-size:15.5px; margin-bottom:34px;}
+
+  .field{margin-bottom:18px;}
+  .field label{display:block; font-size:13.5px; color:var(--ink); margin-bottom:7px; font-weight:500;}
+  .input-wrap{position:relative;}
+  .input-wrap svg{position:absolute; left:15px; top:50%; transform:translateY(-50%); pointer-events:none;}
+  .field input{
+    width:100%; padding:13px 16px 13px 42px; border-radius:12px; border:1.5px solid var(--line);
+    background:#fff; font-family:'Inter', sans-serif; font-size:15px; color:var(--ink);
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .field input:focus{outline:none; border-color:var(--sage); box-shadow:0 0 0 3px rgba(92,122,82,0.12);}
+  .toggle-pw{
+    position:absolute; right:14px; top:50%; transform:translateY(-50%);
+    background:none; border:none; cursor:pointer; color:var(--ink-soft); font-size:13px; font-weight:500;
+  }
+
+  .row-between{display:flex; justify-content:space-between; align-items:center; margin-bottom:26px; font-size:13.5px;}
+  .row-between .remember{display:flex; align-items:center; gap:8px; color:var(--ink-soft);}
+  .row-between a{color:var(--sage-deep); font-weight:500;}
+  .row-between a:hover{text-decoration:underline;}
+
+  .signin-box .btn-primary{width:100%; padding:14px; font-size:15.5px; margin-bottom:20px;}
+
+  .divider{display:flex; align-items:center; gap:14px; color:var(--ink-soft); font-size:13px; margin-bottom:20px;}
+  .divider::before, .divider::after{content:""; flex:1; height:1px; background:var(--line);}
+
+  .social-row{display:flex; gap:12px; margin-bottom:28px;}
+  .btn-social{
+    flex:1; padding:12px; border-radius:12px; border:1.5px solid var(--line); background:#fff;
+    display:flex; align-items:center; justify-content:center; gap:9px; font-size:14.5px; color:var(--ink);
+    cursor:pointer; transition:border-color .15s ease, background .15s ease;
+  }
+  .btn-social:hover{border-color:var(--ink); background:var(--cream-deep);}
+
+  .signup-line{text-align:center; font-size:14.5px; color:var(--ink-soft);}
+  .signup-line a{color:var(--sage-deep); font-weight:600;}
+  .signup-line a:hover{text-decoration:underline;}
+
+  .fine-print{text-align:center; font-size:12.5px; color:#9c96ac; margin-top:30px; line-height:1.6;}
+  .fine-print a{color:var(--ink-soft); text-decoration:underline;}
+
+  @media (max-width:880px){
+    .signin-shell{grid-template-columns:1fr;}
+    .signin-visual{display:none;}
+    .signin-form-side{padding:40px 24px 60px;}
+  }
+
+  .nav-right .signin-link{font-weight:600}
+  .tabs{display:flex; background:var(--cream-deep); border-radius:999px; padding:4px; margin-bottom:26px}
+  .tab{flex:1; padding:10px; border:none; background:none; border-radius:999px; font:500 14.5px 'Inter',sans-serif; color:var(--ink-soft); cursor:pointer}
+  .tab[aria-selected="true"]{background:#fff; color:var(--ink); box-shadow:0 2px 8px -2px rgba(44,39,64,.18)}
+  .panel[hidden],.tabs[hidden]{display:none}
+  .field input.bad{border-color:#c4577a; box-shadow:0 0 0 3px rgba(196,87,122,.12)}
+  .err{color:#b0405f; font-size:12.5px; margin-top:6px; min-height:0}
+  .alert{border-radius:12px; padding:12px 14px; font-size:14px; margin-bottom:18px; line-height:1.5}
+  .alert.error{background:#fdedf2; color:#9c3453}
+  .alert.ok{background:var(--sage-pale); color:var(--sage-deep)}
+  .alert[hidden]{display:none}
+  .strength{height:4px; border-radius:4px; background:var(--line); margin-top:8px; overflow:hidden}
+  .strength i{display:block; height:100%; width:0; background:#c4577a; transition:width .2s, background .2s}
+  .linkbtn{background:none; border:none; color:var(--sage-deep); font:600 inherit; font-size:inherit; cursor:pointer; padding:0}
+  .linkbtn:hover{text-decoration:underline}
+  .btn[disabled]{opacity:.65; cursor:wait}
+  .btn-ghost{width:100%; padding:13px; border-radius:999px; border:1.5px solid var(--line); background:#fff; font:500 15px 'Inter',sans-serif; color:var(--ink); cursor:pointer; margin-bottom:22px}
+  .btn-ghost:hover{border-color:var(--ink); background:var(--cream-deep)}
+  .row-between input{accent-color:var(--sage)}
+  .welcome{text-align:center}
+  .welcome .btn{width:100%; margin-bottom:12px}
+  :focus-visible{outline:2px solid var(--sage); outline-offset:2px}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="./mindbloom.html" class="logo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 20C4 12 9 4 20 4C20 12 17 20 4 20Z" fill="#5c7a52"/><path d="M4 20C4 14 7 9 12 7" stroke="#3f5738" stroke-width="1.2" stroke-linecap="round"/></svg>
+    MindBloom
+  </a>
+  <div class="nav-links">
+    <a href="./mindbloom.html">Home</a>
+    <a href="./mindbloom-meditation.html">Meditation</a>
+    <a href="./mindbloom-mood-check.html">Mood Check</a>
+    <a href="./mindbloom-journal.html">Journal</a>
+    <a href="./mindbloom-about.html">About</a>
+  </div>
+  <div class="nav-right">
+    <span class="signin-link">Sign In</span>
+    <button class="btn btn-primary" type="button" id="navStart">Start Your Journey</button>
+  </div>
+</nav>
+
+<div class="signin-shell">
+
+  <!-- LEFT VISUAL -->
+  <div class="signin-visual">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="visual-stack">
+      <div class="bloom-illustration">
+        <svg viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="haloGrad" cx="50%" cy="45%" r="60%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="brainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f6f1e6"/>
+              <stop offset="100%" stop-color="#e8dfc8"/>
+            </linearGradient>
+            <linearGradient id="petalPink" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f3d3dc"/>
+              <stop offset="100%" stop-color="#e2a9bb"/>
+            </linearGradient>
+            <linearGradient id="petalLav" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ded4ee"/>
+              <stop offset="100%" stop-color="#b9a9d9"/>
+            </linearGradient>
+            <linearGradient id="petalSage" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#dbe8cd"/>
+              <stop offset="100%" stop-color="#a9c093"/>
+            </linearGradient>
+          </defs>
+
+          <!-- soft halo -->
+          <circle cx="160" cy="160" r="150" fill="url(#haloGrad)"/>
+
+          <!-- brain silhouette, right hemisphere -->
+          <path d="M160 55
+                   C210 50 248 82 250 128
+                   C252 160 240 172 246 196
+                   C250 216 236 232 214 234
+                   C210 252 190 262 168 258
+                   C160 262 160 258 160 250
+                   Z"
+                fill="url(#brainGrad)" stroke="#c9bd9c" stroke-width="1.5"/>
+          <!-- brain folds -->
+          <path d="M170 78C192 76 214 92 218 114" stroke="#c9bd9c" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+          <path d="M182 100C200 100 214 112 216 130" stroke="#c9bd9c" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+          <path d="M178 128C196 130 208 144 206 162" stroke="#c9bd9c" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+          <path d="M186 168C202 172 210 186 202 202" stroke="#c9bd9c" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+          <path d="M172 206C186 210 192 222 182 234" stroke="#c9bd9c" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+
+          <!-- stems / roots flowing to the left, into blossoms -->
+          <path d="M160 150C130 148 108 158 92 176" stroke="#a9c093" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M160 180C135 182 116 196 104 214" stroke="#a9c093" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M162 118C138 112 116 118 100 132" stroke="#a9c093" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M158 208C140 214 126 228 122 246" stroke="#a9c093" stroke-width="2" stroke-linecap="round" fill="none"/>
+
+          <!-- small leaves along stems -->
+          <ellipse cx="122" cy="168" rx="7" ry="3.5" fill="#a9c093" transform="rotate(-25 122 168)"/>
+          <ellipse cx="136" cy="200" rx="7" ry="3.5" fill="#a9c093" transform="rotate(15 136 200)"/>
+          <ellipse cx="118" cy="122" rx="6" ry="3" fill="#a9c093" transform="rotate(-10 118 122)"/>
+
+          <!-- blossom cluster, left hemisphere replaced by flowers -->
+          <g>
+            <!-- large lavender bloom -->
+            <g transform="translate(90,150)">
+              <circle r="17" fill="url(#petalLav)"/>
+              <circle cx="-14" cy="-6" r="13" fill="url(#petalLav)" opacity="0.9"/>
+              <circle cx="12" cy="-10" r="12" fill="url(#petalLav)" opacity="0.9"/>
+              <circle cx="-10" cy="14" r="12" fill="url(#petalLav)" opacity="0.9"/>
+              <circle cx="14" cy="12" r="11" fill="url(#petalLav)" opacity="0.85"/>
+              <circle r="6" fill="#8a76b8"/>
+            </g>
+            <!-- pink bloom -->
+            <g transform="translate(112,208)">
+              <circle r="20" fill="url(#petalPink)"/>
+              <circle cx="-16" cy="-8" r="14" fill="url(#petalPink)" opacity="0.9"/>
+              <circle cx="15" cy="-9" r="13" fill="url(#petalPink)" opacity="0.9"/>
+              <circle cx="-11" cy="16" r="13" fill="url(#petalPink)" opacity="0.85"/>
+              <circle cx="15" cy="14" r="12" fill="url(#petalPink)" opacity="0.85"/>
+              <circle r="7" fill="#c9748f"/>
+            </g>
+            <!-- sage bloom -->
+            <g transform="translate(96,110)">
+              <circle r="14" fill="url(#petalSage)"/>
+              <circle cx="-11" cy="-5" r="10" fill="url(#petalSage)" opacity="0.9"/>
+              <circle cx="10" cy="-7" r="9" fill="url(#petalSage)" opacity="0.9"/>
+              <circle cx="-8" cy="11" r="9" fill="url(#petalSage)" opacity="0.85"/>
+              <circle r="5" fill="#6f8f5f"/>
+            </g>
+            <!-- small pink bud -->
+            <g transform="translate(66,182)">
+              <circle r="9" fill="url(#petalPink)" opacity="0.9"/>
+              <circle r="3.5" fill="#c9748f"/>
+            </g>
+            <!-- small lavender bud -->
+            <g transform="translate(146,240)">
+              <circle r="8" fill="url(#petalLav)" opacity="0.9"/>
+              <circle r="3" fill="#8a76b8"/>
+            </g>
+          </g>
+
+          <!-- floating petals -->
+          <ellipse cx="220" cy="70" rx="5" ry="3" fill="#e9c3cd" opacity="0.8" transform="rotate(30 220 70)"/>
+          <ellipse cx="242" cy="100" rx="4" ry="2.5" fill="#cbc0e0" opacity="0.8" transform="rotate(-10 242 100)"/>
+          <ellipse cx="70" cy="90" rx="4.5" ry="2.5" fill="#a9c093" opacity="0.8" transform="rotate(50 70 90)"/>
+        </svg>
+      </div>
+      <div class="reminder-card">
+        <div class="tag">🌱 Today's reminder</div>
+        <h3>You don't have to have it figured out to check in.</h3>
+        <p>Just three minutes a day helps most people notice patterns they'd otherwise miss — start small, and let it grow.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="signin-form-side">
+    <div class="signin-box">
+      <div class="top-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 20C4 12 9 4 20 4C20 12 17 20 4 20Z" fill="#5c7a52"/></svg></div>
+
+      <!-- Already signed in -->
+      <div class="panel welcome" id="pWelcome" hidden>
+        <h1 id="wTitle">Welcome back</h1>
+        <p class="sub" id="wSub">You're signed in.</p>
+        <a class="btn btn-primary" id="wGo" href="./mindbloom.html">Continue to MindBloom</a>
+        <button class="btn-ghost" type="button" id="wOut">Sign out</button>
+      </div>
+
+      <div id="authArea">
+        <h1 id="heading">Welcome back</h1>
+        <p class="sub" id="subhead">Sign in to pick up your journal, moods and meditations.</p>
+        <div class="tabs" role="tablist">
+          <button class="tab" role="tab" id="tabIn" aria-selected="true" type="button">Sign in</button>
+          <button class="tab" role="tab" id="tabUp" aria-selected="false" type="button">Create account</button>
+        </div>
+        <div class="alert" id="alert" role="alert" hidden></div>
+
+        <!-- SIGN IN -->
+        <form class="panel" id="fIn" novalidate>
+          <div class="field"><label for="inEmail">Email</label>
+            <div class="input-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9c96ac" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>
+            <input id="inEmail" type="email" autocomplete="email" placeholder="you@example.com"></div><div class="err"></div></div>
+          <div class="field"><label for="inPw">Password</label>
+            <div class="input-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9c96ac" stroke-width="1.8"><rect x="5" y="10" width="14" height="10" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <input id="inPw" type="password" autocomplete="current-password" placeholder="Your password"><button type="button" class="toggle-pw" data-t="inPw">Show</button></div><div class="err"></div></div>
+          <div class="row-between">
+            <label class="remember"><input type="checkbox" id="remember" checked> Keep me signed in</label>
+            <button type="button" class="linkbtn" id="toForgot">Forgot password?</button>
+          </div>
+          <button class="btn btn-primary" type="submit">Sign in</button>
+        </form>
+
+        <!-- SIGN UP -->
+        <form class="panel" id="fUp" novalidate hidden>
+          <div class="field"><label for="upName">Your name</label>
+            <div class="input-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9c96ac" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c1-4 4-6 8-6s7 2 8 6"/></svg>
+            <input id="upName" type="text" autocomplete="name" placeholder="What should we call you?" maxlength="40"></div><div class="err"></div></div>
+          <div class="field"><label for="upEmail">Email</label>
+            <div class="input-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9c96ac" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>
+            <input id="upEmail" type="email" autocomplete="email" placeholder="you@example.com"></div><div class="err"></div></div>
+          <div class="field"><label for="upPw">Password</label>
+            <div class="input-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9c96ac" stroke-width="1.8"><rect x="5" y="10" width="14" height="10" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <input id="upPw" type="password" autocomplete="new-password" placeholder="At least 8 characters"><button type="button" class="toggle-pw" data-t="upPw">Show</button></div>
+            <div class="strength"><i id="bar"></i></div><div class="err"></div></div>
+          <button class="btn btn-primary" type="submit">Create account</button>
+        </form>
+
+        <!-- FORGOT -->
+        <form class="panel" id="fForgot" novalidate hidden>
+          <p class="sub" style="margin-bottom:22px">Enter your account email and choose a new password.</p>
+          <div class="field"><label for="fgEmail">Email</label>
+            <div class="input-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9c96ac" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>
+            <input id="fgEmail" type="email" placeholder="you@example.com"></div><div class="err"></div></div>
+          <div class="field"><label for="fgPw">New password</label>
+            <div class="input-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9c96ac" stroke-width="1.8"><rect x="5" y="10" width="14" height="10" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <input id="fgPw" type="password" autocomplete="new-password" placeholder="At least 8 characters"></div><div class="err"></div></div>
+          <button class="btn btn-primary" type="submit">Reset password</button>
+          <p class="signup-line"><button type="button" class="linkbtn" id="backIn">Back to sign in</button></p>
+        </form>
+
+        <div id="guestArea">
+          <div class="divider">or</div>
+          <button class="btn-ghost" type="button" id="guest">Continue as guest</button>
+          <p class="fine-print" style="margin-top:0">Your journal and moods are saved only in this browser.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const USERS='mb_users', SESS='mb_session';
+  function mkStore(kind){
+    try{const t=window[kind]; t.setItem('__t','1'); t.removeItem('__t'); return t;}catch(e){return null;}
+  }
+  const mem=()=>({d:{},getItem(k){return k in this.d?this.d[k]:null},setItem(k,v){this.d[k]=String(v)},removeItem(k){delete this.d[k]}});
+  const realLS=mkStore('localStorage');
+  const LS=realLS||mem(), SS=mkStore('sessionStorage')||mem();
+  const rd=(s,k)=>{try{return JSON.parse(s.getItem(k))}catch(e){return null}};
+  const wr=(s,k,v)=>{try{s.setItem(k,JSON.stringify(v));return true}catch(e){return false}};
+  const users=()=>rd(LS,USERS)||{};
+  const session=()=>rd(LS,SESS)||rd(SS,SESS);
+
+  // where to go after sign in: ?next=mindbloom-journal.html, else home
+  function dest(){
+    const n=new URLSearchParams(location.search).get('next');
+    return n && /^(\.\/)?mindbloom[\w-]*\.html$/.test(n) ? n : './mindbloom.html';
+  }
+
+  async function hash(pw,salt){
+    const data=new TextEncoder().encode(salt+':'+pw);
+    try{ const b=await crypto.subtle.digest('SHA-256',data); return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join(''); }
+    catch(e){ let h=5381; for(const c of salt+pw){h=((h<<5)+h+c.charCodeAt(0))|0} return 'f'+h; }
+  }
+  const salt=()=>Math.random().toString(36).slice(2)+Date.now().toString(36);
+
+  function startSession(s,remember){
+    LS.removeItem(SESS); SS.removeItem(SESS);
+    wr(remember?LS:SS,SESS,Object.assign({ts:Date.now()},s));
+  }
+  function msg(type,text){const a=$('alert'); a.className='alert '+type; a.textContent=text; a.hidden=!text;}
+  function fieldErr(input,text){
+    const f=input.closest('.field'); if(!f) return;
+    input.classList.toggle('bad',!!text);
+    const e=f.querySelector('.err'); if(e) e.textContent=text||'';
+  }
+  const emailOk=e=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);
+  function clear(form){form.querySelectorAll('input').forEach(i=>fieldErr(i,''));msg('',''); }
+
+  // ---- views ----
+  const forms={in:$('fIn'),up:$('fUp'),forgot:$('fForgot')};
+  function show(v){
+    Object.keys(forms).forEach(k=>forms[k].hidden=k!==v);
+    $('tabIn').setAttribute('aria-selected',v==='in'); $('tabUp').setAttribute('aria-selected',v==='up');
+    document.querySelector('.tabs').hidden = v==='forgot';
+    $('guestArea').hidden = v==='forgot';
+    $('heading').textContent = v==='up'?'Start your journey':v==='forgot'?'Reset your password':'Welcome back';
+    $('subhead').textContent = v==='up'?'Create a free account to save your journal and moods.':v==='forgot'?'':'Sign in to pick up your journal, moods and meditations.';
+    $('subhead').hidden = v==='forgot';
+    Object.values(forms).forEach(clear);
+  }
+  $('tabIn').onclick=()=>show('in'); $('tabUp').onclick=()=>show('up');
+  $('navStart').onclick=()=>{show('up'); $('upName').focus();};
+  $('toForgot').onclick=()=>{show('forgot'); $('fgEmail').value=$('inEmail').value; $('fgEmail').focus();};
+  $('backIn').onclick=()=>show('in');
+  document.querySelectorAll('.toggle-pw').forEach(b=>b.onclick=()=>{
+    const i=$(b.dataset.t); const hide=i.type==='password'; i.type=hide?'text':'password'; b.textContent=hide?'Hide':'Show';
+  });
+  document.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>fieldErr(i,'')));
+  $('upPw').addEventListener('input',e=>{
+    const v=e.target.value; let s=0;
+    if(v.length>=8)s++; if(/[A-Z]/.test(v)&&/[a-z]/.test(v))s++; if(/\d/.test(v))s++; if(/[^\w\s]/.test(v)||v.length>=12)s++;
+    $('bar').style.width=(v?Math.max(s,1)*25:0)+'%'; $('bar').style.background=['#c4577a','#c4577a','#d9a441','#7fa06f','#5c7a52'][s];
+  });
+
+  function done(name,s,remember,text){
+    startSession(s,remember);
+    msg('ok',text);
+    setTimeout(()=>location.href=dest(),900);
+  }
+  function busy(form,on){const b=form.querySelector('button[type=submit]'); b.disabled=on;}
+
+  // ---- sign in ----
+  forms.in.addEventListener('submit',async e=>{
+    e.preventDefault(); const em=$('inEmail'),pw=$('inPw'); msg('','');
+    const email=em.value.trim().toLowerCase(); let bad=false;
+    if(!emailOk(email)){fieldErr(em,'Enter a valid email address.');bad=true}
+    if(!pw.value){fieldErr(pw,'Enter your password.');bad=true}
+    if(bad) return;
+    busy(forms.in,true);
+    const u=users()[email];
+    if(!u){ busy(forms.in,false); msg('error','No account found for this email. Create one using the "Create account" tab.'); return; }
+    if(await hash(pw.value,u.salt)!==u.hash){ busy(forms.in,false); fieldErr(pw,'Wrong password. Try again or reset it.'); return; }
+    done(u.name,{email,name:u.name},$('remember').checked,'Signed in. Taking you to MindBloom…');
+  });
+
+  // ---- sign up ----
+  forms.up.addEventListener('submit',async e=>{
+    e.preventDefault(); msg('','');
+    const n=$('upName'),em=$('upEmail'),pw=$('upPw'); const email=em.value.trim().toLowerCase(); let bad=false;
+    if(n.value.trim().length<2){fieldErr(n,'Enter your name.');bad=true}
+    if(!emailOk(email)){fieldErr(em,'Enter a valid email address.');bad=true}
+    if(pw.value.length<8){fieldErr(pw,'Use at least 8 characters.');bad=true}
+    if(bad) return;
+    const all=users();
+    if(all[email]){ fieldErr(em,'An account with this email already exists. Sign in instead.'); return; }
+    busy(forms.up,true);
+    const s=salt(); all[email]={name:n.value.trim(),salt:s,hash:await hash(pw.value,s),created:Date.now()};
+    if(!wr(LS,USERS,all)){ busy(forms.up,false); msg('error','Could not save your account. Turn off private browsing and try again.'); return; }
+    done(n.value.trim(),{email,name:n.value.trim()},true,'Account created. Welcome to MindBloom!');
+  });
+
+  // ---- reset password ----
+  forms.forgot.addEventListener('submit',async e=>{
+    e.preventDefault(); msg('','');
+    const em=$('fgEmail'),pw=$('fgPw'); const email=em.value.trim().toLowerCase(); let bad=false;
+    if(!emailOk(email)){fieldErr(em,'Enter a valid email address.');bad=true}
+    if(pw.value.length<8){fieldErr(pw,'Use at least 8 characters.');bad=true}
+    if(bad) return;
+    const all=users();
+    if(!all[email]){ fieldErr(em,'No account found for this email.'); return; }
+    const s=salt(); all[email].salt=s; all[email].hash=await hash(pw.value,s); wr(LS,USERS,all);
+    show('in'); $('inEmail').value=email; msg('ok','Password updated. Sign in with your new password.');
+  });
+
+  // ---- guest ----
+  $('guest').onclick=()=>done('Guest',{guest:true,name:'Guest'},false,'Continuing as guest…');
+
+  window.addEventListener('error',ev=>msg('error','Something went wrong: '+ev.message));
+  if(!realLS) msg('error','Your browser is blocking storage here, so accounts will not be remembered. Download this file and open it from your folder in Chrome.');
+
+  // ---- already signed in ----
+  const cur=session();
+  if(cur){
+    $('authArea').hidden=true; $('pWelcome').hidden=false;
+    $('wTitle').textContent='Hi, '+(cur.name||'there')+'';
+    $('wSub').textContent=cur.guest?"You're browsing as a guest.":'You are signed in as '+cur.email+'.';
+    $('wGo').href=dest();
+    $('wOut').onclick=()=>{LS.removeItem(SESS);SS.removeItem(SESS);location.reload();};
+  } else { show('in'); }
+})();
+</script>
+</body>
+</html>

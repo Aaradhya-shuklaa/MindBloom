@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>MindBloom AI – Meditation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#FAF9F6;--card:#FFFFFF;--ink:#33264D;--mute:#756C7D;--g:#DDE9DF;--gd:#8FAE96;--l:#E9E2FF;--ld:#8770D6;--pink:#F4D9E8;--pink-deep:#DB9BBE;--lavender:#B9A7E8;--line:#E5DFEA;--danger:#C4577A;--danger-bg:#FDEDF2;--button-accent:#6E52C4;--placeholder:#B9AFC4}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Georgia,'Segoe UI',serif}
+main{max-width:1000px;margin:auto;padding:20px 16px 60px}
+h1{font-size:clamp(1.9rem,6vw,2.8rem);margin:.2em 0}h2{margin:1.4em 0 .5em}
+.sub{color:var(--mute);margin:0 0 18px}
+.hero{background:linear-gradient(120deg,var(--l),var(--pink));border-radius:24px;padding:24px}
+button,select,input,textarea{font:inherit;color:var(--ink)}
+button{border:0;border-radius:999px;padding:10px 20px;background:linear-gradient(135deg,var(--ld),var(--button-accent));color:#fff;cursor:pointer;min-height:44px}
+button.sec{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,.card:focus-visible{outline:3px solid var(--ld);outline-offset:2px}
+input,select,textarea{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;width:100%}
+input::placeholder,textarea::placeholder{color:var(--placeholder)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.stat{background:var(--card);border-radius:16px;padding:12px;text-align:center}.stat b{font-size:1.6rem;display:block}
+.chip{background:var(--card);color:var(--ink);border:1px solid var(--line);padding:6px 14px;min-height:36px}
+.chip[aria-pressed=true]{background:var(--ld);color:#fff;border-color:var(--ld)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.card small{color:var(--mute)}.tag{font-size:.8rem;background:var(--l);color:var(--ld);border-radius:99px;padding:2px 10px;align-self:flex-start}
+.panel{background:var(--card);border-radius:20px;padding:18px;border:1px solid var(--line)}
+.hidden{display:none!important}
+.session{text-align:center;max-width:620px;margin:auto}
+.orb{width:150px;height:150px;border-radius:50%;margin:18px auto;background:radial-gradient(circle,var(--l),var(--g));animation:br 8s ease-in-out infinite}
+@keyframes br{50%{transform:scale(1.2)}}
+@media (prefers-reduced-motion:reduce){.orb{animation:none}*{scroll-behavior:auto!important}}
+.time{font-size:3rem;font-variant-numeric:tabular-nums}
+.bar{height:10px;background:var(--line);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--gd)}
+.step{font-size:1.25rem;min-height:5.5em;padding:10px}
+.dots{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin:8px}.dots span{width:10px;height:10px;border-radius:50%;background:var(--line)}.dots .on{background:var(--gd);transform:scale(1.4)}
+label{display:block;font-size:.9rem;color:var(--mute);margin:10px 0 4px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.note{font-size:.85rem;color:var(--mute)}
+nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 40px;
+    max-width:1180px; margin:0 auto; width:100%;
+  }
+  .logo{display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-size:20px; font-weight:600;}
+  .nav-links{display:flex; gap:34px; font-size:15px; color:var(--ink-soft);}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-right{display:flex; align-items:center; gap:22px;}
+  .nav-right .signin-link{font-size:15px; color:var(--ink);}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:12px 24px; border-radius:999px; font-size:15px; font-weight:500;
+    cursor:pointer; border:none; transition:transform .15s ease, background .15s ease;
+  }
+</style></head><body><main>
+<nav>
+  <div class="logo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 20C4 12 9 4 20 4C20 12 17 20 4 20Z" fill="#5c7a52"/><path d="M4 20C4 14 7 9 12 7" stroke="#3f5738" stroke-width="1.2" stroke-linecap="round"/></svg>
+    MindBloom
+  </div>
+  <div class="nav-links">
+    <a href="./mindbloom.html">Home</a>
+    <a href="./mindbloom-meditation.html">Meditation</a>
+    <a href="./mindbloom-mood-check.html">Mood Check</a>
+    <a href="./mindbloom-journal.html">Journal</a>
+    <a href="./mindbloom-about.html">About</a>
+  </div>
+  <div class="nav-right">
+    
+  </div>
+</nav>
+<div id="home">
+<header class="hero">
+<h1>Find Your Inner Peace</h1>
+<p class="sub">Take a pause, reconnect with yourself, and discover your moment of calm.</p>
+<div class="row"><button class="pri" id="quick">▶ Quick start (1 min)</button><button class="sec" id="favBtn" aria-pressed="false">♥ Favourites only</button><button class="sec" id="jBtn">📓 Gratitude journal</button></div>
+<div class="stats" aria-label="Progress"><div class="stat"><b id="sN">0</b>sessions</div><div class="stat"><b id="sM">0</b>minutes</div><div class="stat"><b id="sS">0</b>day streak</div></div>
+</header>
+
+<h2>Today's recommendation</h2><div class="panel" id="daily"></div>
+
+<h2>How are you feeling? <small class="note">(optional)</small></h2>
+<div class="row" id="moods"></div><div id="moodOut" class="note" style="margin-top:8px" aria-live="polite"></div>
+
+<h2>Explore practices</h2>
+<label for="q" class="note">Search</label><input id="q" type="search" placeholder="Search e.g. sleep, anger, breathing…">
+<div class="row" id="cats" style="margin:12px 0"></div>
+<div class="grid" id="list" aria-live="polite"></div>
+
+<h2>Build your own session</h2>
+<div class="panel"><div class="two">
+<div><label for="bP">Practice</label><select id="bP"></select></div>
+<div><label for="bD">Duration</label><select id="bD"></select></div>
+<div><label for="bG">Style</label><select id="bG"><option value="g">Guided instructions</option><option value="s">Silent practice</option></select></div>
+<div><label for="bS">Ambient sound</label><select id="bS"><option value="none">None</option><option value="rain">Rain</option><option value="ocean">Ocean waves</option><option value="wind">Soft wind</option></select></div>
+</div><label><input type="checkbox" id="bPrep" style="width:auto" checked> Add a short preparation and ending period</label>
+<div id="plan" class="note" style="margin:10px 0"></div><button class="pri" id="bGo">Start my session</button></div>
+<p class="note">Meditation is a wellbeing practice, not a medical treatment. It can't diagnose or cure any condition. If you're struggling, please reach out to a health professional or someone you trust.</p>
+</div>
+
+<div id="jr" class="hidden"><button class="sec" data-back>← Back</button><h2>Gratitude journal</h2><div id="jList"></div></div>
+
+<div id="sess" class="hidden session">
+<div class="row" style="justify-content:space-between"><button class="sec" id="end">End session</button><button class="sec" id="fav">♡ Favourite</button></div>
+<h2 id="sT"></h2><p class="note" id="sP"></p>
+<div id="sV"></div>
+<div class="orb" aria-hidden="true"></div>
+<div class="time" id="tm" role="timer">0:00</div>
+<div class="bar" role="progressbar" aria-label="Session progress" id="pb"><i id="pi"></i></div>
+<div class="dots" id="dots" aria-hidden="true"></div>
+<p class="step" id="stp" aria-live="polite"></p>
+<div id="gx" class="hidden"></div>
+<div class="row" style="justify-content:center">
+<button class="sec" id="prev">◀ Previous</button><button id="pp">Start</button><button class="sec" id="rs">↺ Restart</button><button class="sec" id="next">Next ▶</button><button class="sec" id="skip">Skip exercise</button></div>
+<div class="row" style="justify-content:center;margin-top:12px"><label for="snd" style="margin:0">Sound</label><select id="snd" style="width:auto"><option value="none">Off</option><option value="rain">Rain</option><option value="ocean">Ocean waves</option><option value="wind">Soft wind</option></select><label style="margin:0"><input type="checkbox" id="chime" style="width:auto" checked> Chime</label></div>
+<p class="note">Stop any movement or practice that feels uncomfortable. Audio is optional and never starts by itself.</p>
+</div>
+
+<div id="done" class="hidden session panel">
+<h2>Session complete 🌿</h2><p id="dMsg"></p>
+<div class="two"><div><label for="mA">Mood before</label><select id="mA"></select></div><div><label for="mB">Mood after</label><select id="mB"></select></div></div>
+<div class="row" style="justify-content:center;margin-top:14px"><button id="dFav" class="sec">♡ Save to favourites</button><button id="dAgain" class="pri">Start another practice</button></div>
+</div>
+</main>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const CATS=["Stress Relief","Better Focus","Relaxation","Gratitude","Sleep Preparation","Emotional Awareness","Mindfulness"];
+const MOODS={Stressed:[2,9,14],Worried:[2,22,10],Sad:[5,20,6],Angry:[23,9,7],Distracted:[3,16,4],Tired:[8,10,18],Overwhelmed:[2,13,21],Calm:[17,7,15],Grateful:[6,5,24],"Looking for better focus":[16,3,12]};
+const BEF=["Stressed","Worried","Sad","Angry","Distracted","Tired","Overwhelmed","Calm","Grateful"];
+// id,name,cat,mins,purpose,steps,opts{manual,v}
+const P=[
+[1,"Body Scan","Relaxation",5,"Gradually notice sensations from head to toe without judging them.",["Sit or lie comfortably. Let your eyes close or soften your gaze. Take a slow breath in and a longer breath out.","Bring attention to your forehead. Notice any tightness or ease. Let the muscles soften.","Move to your face: eyes, cheeks, jaw. Let your jaw unclench and your tongue rest.","Notice your shoulders. If they're lifted, let them drop a little with your next exhale.","Feel your arms and hands. Notice warmth, weight, tingling, or nothing at all. All of it is fine.","Bring attention to your stomach. Feel it rise and fall with each breath. No need to change it.","Scan down your legs and into your feet. Notice where they touch the floor or bed.","Feel your whole body resting as one. Take a deep breath and gently return when you're ready."]],
+[2,"5-4-3-2-1 Grounding","Stress Relief",3,"Anchor yourself in the present moment through your senses.",["Take a slow breath. We'll use your five senses. You can skip any sense that isn't available or comfortable.","5 things you can SEE. Look around slowly and name five, silently or aloud.","4 things you can physically FEEL: your feet on the floor, fabric on skin, the chair beneath you.","3 sounds you can HEAR. Near ones, far ones, even the quiet itself.","2 smells you can notice. If none, recall a smell you like.","1 taste you can notice. Perhaps the inside of your mouth, or a sip of water.","Take one deep breath. You are here, now. Notice how you feel."],{manual:1}],
+[3,"Mindful Listening","Better Focus",5,"Train attention by listening to sounds without labelling them good or bad.",["Settle in. Close your eyes or lower your gaze. Let your ears be open.","Listen to the most obvious sound. Hear its pitch, rhythm, and volume, without naming it.","Now widen: find a quieter sound beneath or behind the first.","If your mind says 'I like this' or 'I hate that', note it and return to simply hearing.","Notice the spaces between sounds. Sounds arise and fade on their own.","Take a breath and let your hearing relax. Open your eyes slowly."]],
+[4,"Guided Visualization","Relaxation",5,"Rest the mind in a calm imagined place.",[],{v:{"Peaceful beach":["Breathe slowly. Picture a quiet beach at golden hour.","Feel warm sand under your feet. Hear waves rolling in and softly out.","Breathe in salt air. With each wave, let a worry slide out with the tide.","Rest here, calm and unhurried. When ready, bring the calm back with you."],"Green forest":["Breathe slowly. Imagine a soft path winding through tall trees.","Sunlight filters through leaves in gentle patches. The air smells of earth and pine.","Hear birdsong and rustling leaves. Your steps are slow and easy.","Find a mossy spot to sit. Let the forest hold you for a moment, then return."],"Quiet garden":["Breathe slowly. Step into a small garden with a low wall around it.","Notice colors of flowers, the hum of a bee, the scent of damp soil.","Sit on a bench and feel the sun on your hands.","Carry this gentle garden calm with you as you return."],"Mountain sunrise":["Breathe slowly. Picture standing on a mountain ridge before dawn.","The sky glows pink and gold. The air is cool and clear.","The sun rises slowly. Nothing to do but watch and breathe.","Feel steady like the mountain. Let that steadiness come back with you."],"Rainy window":["Breathe slowly. Imagine sitting warm and cozy by a window.","Raindrops trace slow paths down the glass. Listen to the soft patter.","You're safe and sheltered. Let thoughts drift like the drops.","When ready, bring this cozy stillness back."],"Peaceful night sky":["Breathe slowly. Picture lying on soft grass under a wide night sky.","Stars appear one by one. The night is quiet and spacious.","Each breath is a little slower than the last. Let your body grow heavy.","Rest under the stars, then gently return when you're ready."]}}],
+[5,"Loving-Kindness","Emotional Awareness",5,"Offer kind wishes to yourself and others.",[],{v:{"Self-compassion":["Place a hand on your heart. Breathe gently.","Silently repeat: 'May I feel peaceful.'","'May I treat myself with kindness.'","'May I accept myself as I am.'","Feel any warmth, however small. Rest in it."],"Kindness toward others":["Breathe gently. Bring to mind someone you care about.","Silently: 'May you feel peaceful.'","'May you find happiness.'","'May you be safe and well.'","Now extend it to people around you: 'May the people around me find happiness.'"],"General compassion":["Breathe gently. Start with yourself: 'May I feel peaceful.'","Widen to someone you love: 'May you be happy.'","Widen to a neighbor or stranger: 'May you be free from suffering.'","Widen to all beings: 'May everyone find peace.'","Rest in this open, kind feeling."]}}],
+[6,"Gratitude Meditation","Gratitude",5,"Reflect on what you appreciate.",["Breathe slowly. Let your attention soften.","Think of one thing you appreciate today. It can be small. Notice how it feels in your body.","Think of a second: a person, a place, or something that helped you.","Think of a third: something about yourself you're thankful for.","Reflect: who or what made these possible? Let appreciation settle.","Take a final breath. Carry this appreciation into your day."],{g:1}],
+[7,"Thought Observation","Mindfulness",5,"Watch thoughts come and go like clouds.",["Sit comfortably. Imagine a wide, open sky.","Thoughts are clouds drifting through it. You don't have to push them away or hold on.","Notice the thought, let it pass, and gently return your attention to the present.","If you get carried away, that's normal. Notice it kindly and come back to the breath.","Some clouds are big, some small, some dark, some light. The sky stays wide.","Take a deep breath. Rest as the sky."]],
+[8,"Gentle Mindful Stretching","Relaxation",5,"Release tension with simple seated movements at your own pace.",["Sit comfortably, feet flat. Move only within comfort. Stop if anything hurts.","Shoulder rolls: lift your shoulders up, roll them back and down. Repeat slowly 5 times.","Neck: gently lower your right ear toward your right shoulder. Breathe. Return to center and repeat on the left.","Arms: raise both arms slowly overhead, stretch gently, then lower them like floating down.","Wrists and hands: open and close your fists, then circle your wrists.","Seated twist: turn gently to one side, keep your spine tall, then switch. Never force it.","Rest your hands on your lap. Notice how your body feels now."]],
+[9,"Box Breathing","Stress Relief",3,"Steady your breath with a calm 4-4-4-4 rhythm.",["Sit upright. Exhale fully.","Breathe IN through the nose for 4 counts.","HOLD gently for 4.","Breathe OUT slowly for 4.","HOLD empty for 4. Repeat the square. Follow the orb. Shorten the counts if uncomfortable."]],
+[10,"Bedtime Relaxation","Sleep Preparation",10,"Wind down body and mind for sleep.",["Lie down. Let the bed support you.","Take three slow breaths, with longer exhales.","Tense your feet for 3 seconds, then release. Do the same with calves and thighs.","Let your belly, chest, and shoulders soften into the mattress.","Imagine a slow wave of heaviness moving through your body.","If thoughts arise, label them 'later' and return to your breath.","Let go. There's nothing more to do tonight."]],
+[11,"Alternate-Nostril Breathing","Stress Relief",3,"Balance and slow the breath.",["Sit tall. Rest your left hand on your lap. Skip this if you're congested or it feels uncomfortable.","Close your right nostril with your right thumb. Inhale gently through the left.","Close the left with your ring finger, release the right, exhale slowly through the right.","Inhale through the right, close it, exhale through the left. That's one round.","Continue gently. Return to normal breathing when done."]],
+[12,"Progressive Muscle Relaxation","Relaxation",8,"Release tension by tensing then relaxing muscle groups.",["Sit or lie down. Breathe slowly. Tense only lightly, never to pain.","Clench your fists for 5 seconds, then release for 10. Feel the difference.","Tighten your arms and shoulders, then let go.","Scrunch your face, then relax it.","Tighten your stomach, then release.","Tighten legs and feet, then release.","Notice your whole body, loose and heavy."]],
+[13,"Walking Meditation","Mindfulness",5,"Turn slow walking into an anchor for attention.",["Find a short path, 10 steps long. Stand and feel your feet.","Walk slowly. Notice lifting, moving, and placing each foot.","Let your arms hang loosely. Keep your gaze soft.","At the end, pause, turn mindfully, and walk back.","When your mind wanders, return to the feeling in your feet."]],
+[14,"Mindful Eating","Mindfulness",5,"Slow down and savor a small bite of food.",["Choose a small piece of food, like a raisin or fruit slice.","Look at it closely: color, texture, shape.","Smell it. Notice if your mouth waters.","Place it on your tongue without chewing. Notice texture.","Chew slowly, noticing flavors change. Swallow and notice the aftertaste."]],
+[15,"Mindful Tea or Water","Mindfulness",3,"Make a simple drink a moment of presence.",["Hold your cup in both hands. Feel its warmth or coolness.","Look at the liquid and notice steam or ripples.","Take a small sip. Let it rest in your mouth before swallowing.","Notice the sensation as it travels down. Repeat slowly."]],
+[16,"Study Focus","Better Focus",5,"Clear your mind and set one intention before studying.",["Sit as you would to study. Take three slow breaths.","Name one thing you'll focus on for the next session.","Count 10 breaths. If your mind wanders, restart kindly at one.","Picture yourself working calmly on your task.","Open your eyes and begin."]],
+[17,"Silent Meditation","Mindfulness",10,"Simply sit with no guidance.",["Sit comfortably and take a few breaths. Then rest in silence, noticing whatever arises. The chime will signal the end."]],
+[18,"Candle-Gazing","Better Focus",5,"Rest the gaze on a flame to steady attention.",["Safety first: place a candle on a stable, uncluttered surface about an arm's length away, never leave it unattended, and keep hair and fabric away. Blink naturally. If your eyes feel strained, close them. If you prefer, use a battery candle.","Soften your gaze on the flame. Notice its colors and movement.","When your mind wanders, gently return to the flame.","Close your eyes and picture the glow. Then open them and extinguish the candle safely."]],
+[19,"Affirmations","Emotional Awareness",3,"Repeat supportive phrases that feel true to you.",["Breathe slowly. Choose a phrase that feels believable, like 'I am doing my best.'","Repeat it silently with each exhale.","Try another: 'I can take this one step at a time.'","Notice how your body feels. Let the words settle."]],
+[20,"Forgiveness","Emotional Awareness",7,"Gently release resentment, for yourself or another. Go at your own pace.",["Breathe slowly. You don't have to forgive anyone. Just see what's present. Skip if it feels too heavy.","Bring to mind a mild hurt. Notice sensations in your body.","Acknowledge: 'This hurt me.' Let yourself feel it without judging.","If ready, offer: 'May I release what I'm carrying.'","Return to your breath. Be gentle with yourself."]],
+[21,"Worry Observation","Stress Relief",5,"Observe worries as passing mental events.",["Breathe slowly. Let your worries surface.","Name each worry briefly: 'planning', 'what-if', 'replaying'.","Imagine placing each on a leaf floating down a stream.","Notice that worries come and go. You don't have to solve them right now.","Return to your breath and feet on the floor."]],
+[22,"Short Mindful Break","Stress Relief",1,"A quick reset between tasks.",["Stop what you're doing. Drop your shoulders.","Take three slow breaths, longer on the exhale.","Notice one thing you can see and one thing you can hear. Continue your day."]],
+[23,"Anger Cooling","Emotional Awareness",5,"Create space around strong anger.",["Pause. Feel your feet on the floor. Anger is a normal feeling.","Where do you feel it in your body? Heat, tight jaw, fists? Just notice.","Exhale slowly, longer than your inhale, 5 times.","Ask: what do I need right now? Don't act yet.","Take one more breath. Choose your next step calmly."]],
+[24,"Gratitude Reflection","Gratitude",3,"Quickly recall what went well today.",["Breathe slowly.","Recall one thing that went well today.","Recall someone who helped you.","Notice any warmth, then smile gently."]]
+];
+const ST={get(){try{return JSON.parse(localStorage.getItem("mb")||"{}")}catch(e){return{}}},set(o){try{localStorage.setItem("mb",JSON.stringify(o))}catch(e){}}};
+let S=Object.assign({sessions:[],fav:[],journal:[]},ST.get());
+const save=()=>ST.set(S);
+const byId=id=>P.find(p=>p[0]==id);
+let cat="All",favOnly=false;
+// Dashboard
+function stats(){const days=[...new Set(S.sessions.map(s=>s.d))].sort();let st=0,d=new Date();const f=x=>x.toISOString().slice(0,10);
+if(!days.includes(f(d)))d.setDate(d.getDate()-1);while(days.includes(f(d))){st++;d.setDate(d.getDate()-1)}
+$("#sN").textContent=S.sessions.length;$("#sM").textContent=Math.round(S.sessions.reduce((a,s)=>a+s.m,0)*10)/10;$("#sS").textContent=st}
+function card(p,tag){return `<div class="card"><span class="tag">${p[2]}</span><b>${p[1]} ${S.fav.includes(p[0])?"♥":""}</b><small>${p[3]} min · ${p[4]}</small><button data-go="${p[0]}">Begin</button></div>`}
+function render(){const q=$("#q").value.toLowerCase();
+const l=P.filter(p=>(cat=="All"||p[2]==cat)&&(!favOnly||S.fav.includes(p[0]))&&(p[1]+p[2]+p[4]).toLowerCase().includes(q));
+$("#list").innerHTML=l.length?l.map(card).join(""):`<p class="note">No practices found${favOnly?" — tap ♡ during a session to add favourites":""}. Try another search or filter.</p>`;
+$("#cats").innerHTML=["All",...CATS].map(c=>`<button class="chip" aria-pressed="${c==cat}" data-c="${c}">${c}</button>`).join("");stats()}
+$("#cats").onclick=e=>{if(e.target.dataset.c){cat=e.target.dataset.c;render()}};
+$("#q").oninput=render;
+$("#favBtn").onclick=e=>{favOnly=!favOnly;e.target.setAttribute("aria-pressed",favOnly);render()};
+document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g)open(byId(g.dataset.go))});
+$("#moods").innerHTML=Object.keys(MOODS).map(m=>`<button class="chip" aria-pressed="false" data-m="${m}">${m}</button>`).join("");
+$("#moods").onclick=e=>{const m=e.target.dataset.m;if(!m)return;$$("#moods .chip").forEach(b=>b.setAttribute("aria-pressed",b.dataset.m==m));
+$("#moodOut").innerHTML="Practices you might try for “"+m+"”:<div class='grid' style='margin-top:8px'>"+MOODS[m].map(i=>card(byId(i))).join("")+"</div>"};
+const dp=P[Math.floor(Date.now()/864e5)%P.length];
+$("#daily").innerHTML=`<b>${dp[1]}</b> · ${dp[3]} min<p>${dp[4]}</p><button data-go="${dp[0]}">Try today's practice</button>`;
+$("#bP").innerHTML=P.map(p=>`<option value="${p[0]}">${p[1]}</option>`).join("");
+$("#bD").innerHTML=[1,3,5,10,15,20,30].map(m=>`<option value="${m}" ${m==5?"selected":""}>${m} minutes</option>`).join("");
+function plan(){const p=byId($("#bP").value),m=+$("#bD").value,pr=$("#bPrep").checked;
+$("#plan").textContent=`Plan: ${p[1]} · ${m} min · ${$("#bG").value=="g"?"guided":"silent"} · sound: ${$("#bS").value}${pr?" · includes a 10-second preparation and a gentle ending":""}.`}
+["bP","bD","bG","bS","bPrep"].forEach(i=>$("#"+i).onchange=plan);plan();
+$("#bGo").onclick=()=>open(byId($("#bP").value),{m:+$("#bD").value,silent:$("#bG").value=="s",snd:$("#bS").value,prep:$("#bPrep").checked});
+$("#quick").onclick=()=>open(byId(22),{m:1});
+// Views
+const V=n=>["home","jr","sess","done"].forEach(v=>$("#"+(v=="sess"?"sess":v)).classList.toggle("hidden",v!=n));
+$$("[data-back]").forEach(b=>b.onclick=()=>{V("home");render()});
+$("#jBtn").onclick=()=>{V("jr");$("#jList").innerHTML=S.journal.length?S.journal.slice().reverse().map(j=>`<div class="panel" style="margin-bottom:8px"><small>${j.d}</small><ul>${j.e.map(x=>`<li>${x.replace(/</g,"&lt;")}</li>`).join("")}</ul></div>`).join(""):'<p class="note">No entries yet. Finish a Gratitude Meditation and choose to save your entries.</p>'};
+// Session engine
+let cur=null,tI=null,AC=null,aN=null;
+function steps(){const p=cur.p;let st=p[5];if(cur.vr)st=p[6].v[cur.vr];if(cur.silent)st=["Practice in silence. A chime will mark the end."];
+if(cur.prep&&!p[6].manual){st=["Preparation: settle into a comfortable position and take a few slow breaths.",...st,"Ending: slowly return your attention to the room."]}
+return st}
+function open(p,o={}){o=o||{};const opts=p[6]||{};
+cur={p,total:(o.m||p[3])*60,silent:!!o.silent,prep:!!o.prep,vr:opts.v?Object.keys(opts.v)[0]:null,i:0,left:(o.m||p[3])*60,run:false,end:0,mA:""};
+$("#sT").textContent=p[1];$("#sP").textContent=p[4]+" Suggested: "+p[3]+" min.";
+$("#sV").innerHTML=opts.v?`<label for="vr">Choose a focus</label><select id="vr">${Object.keys(opts.v).map(k=>`<option>${k}</option>`).join("")}</select>`:"";
+if(opts.v)$("#vr").onchange=e=>{cur.vr=e.target.value;cur.i=0;draw()};
+$("#snd").value=o.snd||"none";$("#gx").classList.toggle("hidden",!opts.g);
+if(opts.g)$("#gx").innerHTML='<div class="panel" style="text-align:left"><b>Optional gratitude entries</b><label for="g1">1</label><input id="g1"><label for="g2">2</label><input id="g2"><label for="g3">3</label><input id="g3"></div>';
+$("#skip").classList.remove("hidden");setFav();$("#pp").textContent="Start";V("sess");draw();stopSound();if(o.snd&&o.snd!="none")sound(o.snd)}
+function fmt(s){s=Math.max(0,Math.ceil(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function draw(){const st=steps();cur.i=Math.min(cur.i,st.length-1);$("#stp").textContent=st[cur.i];
+$("#dots").innerHTML=st.map((_,i)=>`<span class="${i==cur.i?"on":""}"></span>`).join("");
+const pr=1-cur.left/cur.total;$("#tm").textContent=fmt(cur.left);$("#pi").style.width=(pr*100)+"%";$("#pb").setAttribute("aria-valuenow",Math.round(pr*100));
+$("#prev").disabled=cur.i==0;const last=cur.i==st.length-1;$("#next").textContent=last?"Finish ✓":"Next ▶"}
+function tick(){cur.left=(cur.end-Date.now())/1000;
+if(cur.left<=0){cur.left=0;finish();return}
+const st=steps();if(!(cur.p[6]||{}).manual){const idx=Math.min(st.length-1,Math.floor((1-cur.left/cur.total)*st.length));if(idx>cur.i)cur.i=idx}draw()}
+function start(){if(cur.run)return;cur.run=true;cur.end=Date.now()+cur.left*1000;clearInterval(tI);tI=setInterval(tick,250);$("#pp").textContent="Pause"}
+function pause(){if(!cur.run)return;tick();cur.run=false;clearInterval(tI);$("#pp").textContent="Resume"}
+$("#pp").onclick=()=>cur.run?pause():start();
+$("#rs").onclick=()=>{clearInterval(tI);cur.run=false;cur.left=cur.total;cur.i=0;$("#pp").textContent="Start";draw()};
+$("#prev").onclick=()=>{cur.i=Math.max(0,cur.i-1);draw()};
+$("#next").onclick=()=>{if(cur.i>=steps().length-1)finish();else{cur.i++;draw()}};
+$("#skip").onclick=()=>{clearInterval(tI);cur.run=false;stopSound();V("home");render()};
+$("#end").onclick=()=>{const done=cur.total-cur.left;clearInterval(tI);cur.run=false;stopSound();
+if(done>=30&&confirm("Save the "+Math.round(done/60*10)/10+" minutes you practiced?")){log(done/60)}V("home");render()};
+function log(m){S.sessions.push({id:cur.p[0],m,d:new Date().toISOString().slice(0,10)});save()}
+function finish(){clearInterval(tI);cur.run=false;stopSound();const done=Math.max(0,cur.total-cur.left);
+if($("#chime").checked)chime();
+if(cur.p[6]&&cur.p[6].g){const e=["g1","g2","g3"].map(i=>$("#"+i).value.trim()).filter(Boolean);if(e.length&&confirm("Save your gratitude entries to your journal?")){S.journal.push({d:new Date().toLocaleDateString(),e});save()}}
+cur.mins=Math.max(0.1,Math.round(done/6)/10);log(cur.mins);
+$("#dMsg").textContent=`${cur.p[1]} · ${fmt(done)} completed. Well done for taking this time for yourself. Be gentle with whatever you feel next.`;
+$("#mA").innerHTML=$("#mB").innerHTML='<option value="">Skip</option>'+BEF.map(m=>`<option>${m}</option>`).join("");
+$("#dFav").textContent=S.fav.includes(cur.p[0])?"♥ In favourites":"♡ Save to favourites";V("done")}
+$("#dAgain").onclick=()=>{V("home");render();scrollTo(0,0)};
+function setFav(){$("#fav").textContent=S.fav.includes(cur.p[0])?"♥ Favourite":"♡ Favourite"}
+function tog(){const i=S.fav.indexOf(cur.p[0]);i<0?S.fav.push(cur.p[0]):S.fav.splice(i,1);save();setFav();$("#dFav").textContent=S.fav.includes(cur.p[0])?"♥ In favourites":"♡ Save to favourites"}
+$("#fav").onclick=tog;$("#dFav").onclick=tog;
+// Audio (user initiated only)
+function ctx(){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state=="suspended")AC.resume();return AC}catch(e){return null}}
+function sound(t){stopSound();const c=ctx();if(!c||t=="none")return;
+const b=c.createBuffer(1,c.sampleRate*2,c.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+const n=c.createBufferSource();n.buffer=b;n.loop=true;const f=c.createBiquadFilter();f.type=t=="rain"?"highpass":"lowpass";f.frequency.value=t=="rain"?1500:t=="ocean"?500:300;
+const g=c.createGain();g.gain.value=t=="rain"?.12:.2;
+if(t=="ocean"){const l=c.createOscillator(),lg=c.createGain();l.frequency.value=.1;lg.gain.value=.12;l.connect(lg).connect(g.gain);l.start();n._l=l}
+n.connect(f).connect(g).connect(c.destination);n.start();aN=n}
+function stopSound(){if(aN){try{aN.stop();aN._l&&aN._l.stop()}catch(e){}aN=null}}
+$("#snd").onchange=e=>sound(e.target.value);
+function chime(){const c=ctx();if(!c)return;const o=c.createOscillator(),g=c.createGain();o.frequency.value=528;g.gain.setValueAtTime(.2,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+2.5);o.connect(g).connect(c.destination);o.start();o.stop(c.currentTime+2.6)}
+render();
+</script></body></html>

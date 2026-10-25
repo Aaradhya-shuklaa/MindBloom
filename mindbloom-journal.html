@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal — MindBloom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --lavender:#B9A7E8;
+    --lavender-deep:#8770D6;
+    --light-lavender:#E9E2FF;
+    --cream:#FAF9F6;
+    --dark-purple:#33264D;
+    --soft-pink:#F4D9E8;
+    --pink-deep:#DB9BBE;
+    --sage:#DDE9DF;
+    --sage-deep:#8FAE96;
+    --muted:#756C7D;
+    --white:#FFFFFF;
+    --border:#E5DFEA;
+    --danger:#C4577A;
+    --danger-bg:#FDEDF2;
+    --shadow-soft:0 16px 38px -20px rgba(51,38,77,0.22);
+    --shadow-lav:0 18px 38px -18px rgba(135,112,214,0.45);
+    --radius-lg:26px;
+    --radius-md:18px;
+    --radius-sm:12px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Poppins', sans-serif; background:var(--cream); color:var(--dark-purple); -webkit-font-smoothing:antialiased; overflow-x:hidden;}
+  img,svg{display:block; max-width:100%;}
+  a{color:inherit; text-decoration:none;}
+  button, input, textarea{font-family:inherit;}
+  button{cursor:pointer; border:none; background:none;}
+  ul{list-style:none;}
+  h1,h2,h3,.serif{font-family:'DM Serif Display', serif; font-weight:400; color:var(--dark-purple); letter-spacing:-0.01em;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  .wrap-narrow{max-width:860px; margin:0 auto; padding:0 28px;}
+  :focus-visible{outline:2.5px solid var(--lavender-deep); outline-offset:3px; border-radius:6px;}
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important;} }
+  .fade-in{animation:fadeIn .45s ease both;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+
+  /* ============ NAVBAR ============ */
+  header{position:sticky; top:0; z-index:200; padding:18px 0; background:rgba(250,249,246,0.85); backdrop-filter:blur(14px); border-bottom:1px solid transparent; transition:box-shadow .3s ease, border-color .3s ease;}
+  header.scrolled{box-shadow:0 8px 26px -20px rgba(51,38,77,0.3); border-color:var(--border);}
+  nav.wrap{display:flex; align-items:center; justify-content:space-between; gap:20px;}
+  .logo{display:flex; align-items:center; gap:8px; font-family:'DM Serif Display', serif; font-size:1.22rem;}
+  .nav-links{display:flex; gap:26px; font-size:0.92rem; font-weight:500; color:var(--muted);}
+  .nav-links a{position:relative; padding:6px 2px; transition:color .25s ease;}
+  .nav-links a::after{content:''; position:absolute; left:0; bottom:-1px; height:2px; width:0; background:var(--lavender-deep); transition:width .3s ease;}
+  .nav-links a:hover{color:var(--dark-purple);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-links a.active{color:var(--dark-purple); font-weight:700;}
+  .nav-links a.active::after{width:100%;}
+  .nav-icons{display:flex; align-items:center; gap:14px;}
+  .icon-btn{width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--white); border:1px solid var(--border); font-size:0.95rem; transition:transform .25s ease, border-color .25s ease;}
+  .icon-btn:hover{transform:translateY(-2px); border-color:var(--lavender);}
+  .avatar{width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg, var(--lavender), var(--soft-pink)); display:flex; align-items:center; justify-content:center; font-size:0.92rem; color:#fff; font-weight:700;}
+  .hamburger{display:none; flex-direction:column; gap:5px; padding:8px; z-index:210;}
+  .hamburger span{width:22px; height:2px; background:var(--dark-purple); border-radius:2px;}
+  .mobile-menu{position:fixed; inset:0; background:var(--cream); z-index:199; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:24px; transform:translateY(-100%); transition:transform .4s ease;}
+  .mobile-menu.open{transform:translateY(0);}
+  .mobile-menu a{font-family:'DM Serif Display', serif; font-size:1.4rem;}
+  body.focus-mode header{display:none;}
+
+  /* ============ HERO ============ */
+  .hero{padding:52px 0 34px; text-align:center;}
+  .eyebrow{font-size:0.76rem; font-weight:700; letter-spacing:0.14em; color:var(--lavender-deep); margin-bottom:14px;}
+  .hero h1{font-size:clamp(2rem, 4.2vw, 2.8rem); margin-bottom:10px;}
+  .hero .sub{color:var(--muted); font-size:1.01rem; margin-bottom:16px;}
+  .hero-deco{margin:0 auto 10px; width:64px; height:64px;}
+  .hero-tag{font-family:'DM Serif Display', serif; font-style:italic; color:var(--lavender-deep); font-size:1.05rem;}
+  body.focus-mode .hero{display:none;}
+
+  /* ============ DRAFT BANNER ============ */
+  .draft-banner{
+    display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    background:linear-gradient(120deg, var(--light-lavender), var(--soft-pink));
+    border-radius:var(--radius-md); padding:18px 24px; margin-bottom:30px;
+  }
+  .draft-banner .dtext strong{display:block; font-family:'DM Serif Display', serif; font-size:1.08rem; font-weight:400; margin-bottom:2px;}
+  .draft-banner .dtext span{font-size:0.85rem; color:var(--muted);}
+  .draft-actions{display:flex; gap:10px; flex-shrink:0;}
+
+  /* ============ BUTTONS ============ */
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 24px; border-radius:100px; font-weight:700; font-size:0.9rem; transition:transform .22s cubic-bezier(.2,.8,.2,1), box-shadow .22s ease, opacity .22s ease;}
+  .btn-primary{background:linear-gradient(135deg, var(--lavender-deep), #6E52C4); color:#fff; box-shadow:var(--shadow-lav);}
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-ghost{color:var(--muted); background:var(--white); border:1.5px solid var(--border);}
+  .btn-ghost:hover{color:var(--dark-purple); border-color:var(--lavender);}
+  .btn-danger{color:var(--danger); background:var(--danger-bg); border:1.5px solid rgba(196,87,122,0.3);}
+  .btn-danger:hover{transform:translateY(-2px);}
+  .btn-sm{padding:9px 16px; font-size:0.82rem;}
+
+  /* ============ CREATE CTA ============ */
+  .create-cta{
+    background:linear-gradient(135deg, var(--light-lavender), var(--soft-pink));
+    border-radius:var(--radius-lg); padding:46px 36px; text-align:center; margin-bottom:56px;
+    display:flex; flex-direction:column; align-items:center; gap:16px;
+  }
+  .create-cta h2{font-size:1.5rem;}
+  .create-cta p{color:var(--muted); font-size:0.95rem; max-width:44ch;}
+
+  /* ============ STATS + STREAK ============ */
+  .stats-row{display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:20px;}
+  .stat-card{background:var(--white); border:1px solid var(--border); border-radius:var(--radius-md); padding:22px; text-align:center;}
+  .stat-card .snum{font-family:'DM Serif Display', serif; font-size:1.9rem; margin-bottom:4px;}
+  .stat-card .slabel{font-size:0.8rem; color:var(--muted); font-weight:600;}
+  .streak-card{
+    display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    background:var(--white); border:1px solid var(--border); border-radius:var(--radius-md); padding:20px 24px; margin-bottom:48px;
+  }
+  .streak-card h3{font-size:1.05rem; font-family:'Poppins',sans-serif; font-weight:700; margin-bottom:4px;}
+  .streak-card p{font-size:0.86rem; color:var(--muted);}
+  .streak-pill{background:var(--cream); border-radius:100px; padding:10px 18px; font-weight:700; font-size:0.9rem;}
+
+  /* ============ LIBRARY HEAD ============ */
+  .library-head{margin-bottom:26px;}
+  .library-head h2{font-size:1.7rem; margin-bottom:6px;}
+  .library-head p{color:var(--muted); font-size:0.96rem;}
+
+  .library-toolbar{display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin:24px 0 20px;}
+  .search-box{flex:1; min-width:220px; display:flex; align-items:center; gap:10px; background:var(--white); border:1.5px solid var(--border); border-radius:100px; padding:12px 20px;}
+  .search-box input{border:none; outline:none; background:transparent; flex:1; font-size:0.92rem; color:var(--dark-purple);}
+  .filter-row{display:flex; flex-wrap:wrap; gap:9px;}
+  .filter-chip{padding:9px 16px; border-radius:100px; font-size:0.83rem; font-weight:600; border:1.5px solid var(--border); background:var(--white); color:var(--muted); transition:transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;}
+  .filter-chip:hover{transform:translateY(-2px);}
+  .filter-chip.active{background:var(--dark-purple); border-color:var(--dark-purple); color:#fff;}
+  .day-filter-tag{display:inline-flex; align-items:center; gap:8px; background:var(--light-lavender); padding:8px 16px; border-radius:100px; font-size:0.85rem; font-weight:600; margin-bottom:18px;}
+  .day-filter-tag button{font-size:0.8rem;}
+
+  /* ============ ENTRY GRID ============ */
+  .entries-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin-bottom:70px;}
+  .entry-card{
+    background:var(--white); border:1px solid var(--border); border-radius:var(--radius-md); padding:22px 20px;
+    display:flex; flex-direction:column; gap:10px; transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .entry-card:hover{transform:translateY(-5px); box-shadow:var(--shadow-soft);}
+  .entry-top{display:flex; align-items:center; justify-content:space-between;}
+  .entry-mood{font-size:0.85rem; font-weight:700; display:flex; align-items:center; gap:6px;}
+  .fav-btn{font-size:1.1rem; color:var(--pink-deep); transition:transform .2s ease;}
+  .fav-btn:hover{transform:scale(1.2);}
+  .entry-card h3{font-size:1.12rem; line-height:1.3;}
+  .entry-preview{font-size:0.86rem; color:var(--muted); line-height:1.5; flex:1; overflow-wrap:anywhere;
+    display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;}
+  .entry-meta{font-size:0.78rem; color:#A79FB0;}
+  .entry-open{font-weight:700; font-size:0.86rem; color:var(--lavender-deep); margin-top:4px;}
+
+  .empty-state{text-align:center; background:var(--white); border:1px dashed var(--border); border-radius:var(--radius-lg); padding:60px 30px; margin-bottom:60px;}
+  .empty-state .eicon{font-size:2.4rem; margin-bottom:14px;}
+  .empty-state h2{font-size:1.4rem; margin-bottom:10px;}
+  .empty-state p{color:var(--muted); max-width:42ch; margin:0 auto 24px; line-height:1.55;}
+
+  /* ============ CALENDAR ============ */
+  .calendar-card{background:var(--white); border:1px solid var(--border); border-radius:var(--radius-lg); padding:28px 26px; margin-bottom:60px; max-width:420px;}
+  .calendar-card h2{font-size:1.2rem; margin-bottom:4px;}
+  .cal-month{font-size:0.85rem; color:var(--muted); margin-bottom:18px;}
+  .cal-grid{display:grid; grid-template-columns:repeat(7, 1fr); gap:6px; text-align:center;}
+  .cal-dow{font-size:0.7rem; color:var(--muted); font-weight:700; padding-bottom:6px;}
+  .cal-day{position:relative; padding:8px 0; border-radius:10px; font-size:0.82rem; transition:background .2s ease;}
+  .cal-day.has-entry{font-weight:700;}
+  .cal-day.has-entry::after{content:''; position:absolute; bottom:3px; left:50%; transform:translateX(-50%); width:5px; height:5px; border-radius:50%; background:var(--lavender-deep);}
+  .cal-day.blank{visibility:hidden;}
+  .cal-day button{width:100%; height:100%; padding:4px 0; border-radius:10px;}
+  .cal-day button:hover{background:var(--light-lavender);}
+  .cal-day.selected button{background:var(--lavender-deep); color:#fff;}
+  .cal-day.today button{box-shadow:inset 0 0 0 1.5px var(--lavender-deep);}
+
+  /* ============ EDITOR VIEW ============ */
+  #editorView{display:none;}
+  .editor-topbar{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:22px;}
+  .editor-topbar .etitle{font-size:1.2rem;}
+  .editor-topbar-right{display:flex; align-items:center; gap:12px;}
+  .autosave-status{font-size:0.8rem; color:var(--muted); display:flex; align-items:center; gap:6px;}
+  .autosave-status .dotpulse{width:7px; height:7px; border-radius:50%; background:var(--sage-deep);}
+
+  .editor-layout{display:grid; grid-template-columns:1fr 300px; gap:26px; align-items:start; margin-bottom:70px;}
+  body.focus-mode .editor-layout{grid-template-columns:1fr; max-width:760px; margin-left:auto; margin-right:auto;}
+  body.focus-mode .prompt-panel{display:none;}
+  body.focus-mode .mood-section, body.focus-mode .mode-selector{display:none;}
+
+  .editor-main{background:var(--white); border:1px solid var(--border); border-radius:var(--radius-lg); padding:32px 30px;}
+  .title-input{
+    width:100%; border:none; outline:none; background:transparent; font-family:'DM Serif Display', serif;
+    font-size:1.6rem; color:var(--dark-purple); padding-bottom:14px; border-bottom:1.5px solid var(--border); margin-bottom:24px;
+  }
+  .title-input::placeholder{color:#B9AFC4;}
+
+  .mood-section{margin-bottom:26px;}
+  .mood-section h3{font-size:0.98rem; font-family:'Poppins',sans-serif; font-weight:700; margin-bottom:14px;}
+  .mood-picker{display:flex; flex-wrap:wrap; gap:10px;}
+  .mood-opt{display:flex; align-items:center; gap:7px; padding:10px 16px; border-radius:100px; border:1.5px solid var(--border); background:var(--cream); font-size:0.85rem; font-weight:600; transition:transform .2s ease, border-color .2s ease, background .2s ease;}
+  .mood-opt:hover{transform:translateY(-2px); border-color:var(--lavender);}
+  .mood-opt.selected{background:linear-gradient(135deg, var(--light-lavender), var(--soft-pink)); border-color:var(--lavender-deep); box-shadow:0 0 0 3px var(--light-lavender);}
+
+  .mode-selector{display:flex; gap:8px; margin-bottom:26px; flex-wrap:wrap;}
+  .mode-btn{padding:9px 18px; border-radius:100px; font-size:0.85rem; font-weight:600; border:1.5px solid var(--border); background:var(--cream); color:var(--muted); transition:.2s ease;}
+  .mode-btn.active{background:var(--dark-purple); border-color:var(--dark-purple); color:#fff;}
+
+  .toolbar{display:flex; gap:6px; margin-bottom:12px; flex-wrap:wrap;}
+  .tool-btn{width:36px; height:36px; border-radius:9px; background:var(--cream); border:1px solid var(--border); font-size:0.9rem; font-weight:700; display:flex; align-items:center; justify-content:center; transition:background .2s ease, border-color .2s ease;}
+  .tool-btn:hover{background:var(--light-lavender); border-color:var(--lavender);}
+
+  .editor-area{
+    min-height:340px; border:1.5px solid var(--border); border-radius:var(--radius-md); padding:22px 24px;
+    font-size:1rem; line-height:1.7; color:var(--dark-purple); outline:none;
+  }
+  .editor-area:empty::before{content:attr(data-placeholder); color:#B9AFC4;}
+  .editor-area:focus{border-color:var(--lavender-deep);}
+  .editor-area ul, .editor-area ol{padding-left:22px;}
+
+  .guided-block, .gratitude-block, .reflection-block{display:none; flex-direction:column; gap:18px;}
+  .qa-item label{display:block; font-weight:700; font-size:0.92rem; margin-bottom:8px;}
+  .qa-item textarea{
+    width:100%; min-height:90px; border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px;
+    font-size:0.94rem; color:var(--dark-purple); resize:vertical; line-height:1.55;
+  }
+  .qa-item textarea:focus{outline:none; border-color:var(--lavender-deep);}
+  .gratitude-list{display:flex; flex-direction:column; gap:10px; margin-bottom:16px;}
+  .gratitude-list input{width:100%; border:none; border-bottom:1.5px solid var(--border); padding:10px 2px; font-size:0.95rem; outline:none; background:transparent;}
+  .gratitude-list input:focus{border-color:var(--lavender-deep);}
+
+  .editor-meta-row{display:flex; justify-content:space-between; align-items:center; margin-top:16px; flex-wrap:wrap; gap:10px;}
+  .word-count{font-size:0.82rem; color:var(--muted);}
+  .focus-toggle{font-size:0.82rem; font-weight:700; color:var(--lavender-deep); display:flex; align-items:center; gap:6px;}
+
+  .prompt-panel{background:var(--white); border:1px solid var(--border); border-radius:var(--radius-lg); padding:26px 22px; position:sticky; top:100px;}
+  .prompt-panel h3{font-size:1.08rem; margin-bottom:16px;}
+  .prompt-text{font-family:'DM Serif Display', serif; font-style:italic; font-size:1.08rem; line-height:1.5; color:var(--dark-purple); margin-bottom:18px; min-height:70px;}
+  .prompt-actions{display:flex; flex-direction:column; gap:10px;}
+
+  .save-row{display:flex; justify-content:flex-end; gap:12px; margin-top:26px;}
+
+  /* ============ ENTRY DETAIL VIEW ============ */
+  #entryView{display:none;}
+  .entry-detail{background:var(--white); border:1px solid var(--border); border-radius:var(--radius-lg); padding:44px 40px; margin-bottom:70px;}
+  .entry-detail .edmood{font-size:1rem; font-weight:700; margin-bottom:12px;}
+  .entry-detail h1{font-size:2rem; margin-bottom:8px;}
+  .entry-detail .eddate{color:var(--muted); font-size:0.9rem; margin-bottom:26px;}
+  .entry-divider{height:1px; background:var(--border); margin:26px 0;}
+  .entry-body{font-size:1.02rem; line-height:1.8; white-space:pre-wrap; margin-bottom:26px;}
+  .entry-detail-actions{display:flex; gap:12px; flex-wrap:wrap;}
+
+  /* ============ MODAL / TOAST ============ */
+  .modal-overlay{position:fixed; inset:0; background:rgba(51,38,77,0.45); backdrop-filter:blur(3px); z-index:500; display:none; align-items:center; justify-content:center; padding:20px; opacity:0; transition:opacity .3s ease;}
+  .modal-overlay.open{display:flex; opacity:1;}
+  .modal-box{background:var(--white); border-radius:var(--radius-lg); padding:38px 34px; max-width:420px; width:100%; text-align:center; box-shadow:0 30px 60px -20px rgba(51,38,77,0.4); transform:scale(.94); transition:transform .3s cubic-bezier(.2,.8,.2,1);}
+  .modal-overlay.open .modal-box{transform:scale(1);}
+  .modal-box h3{font-size:1.35rem; margin-bottom:12px;}
+  .modal-box p{color:var(--muted); font-size:0.92rem; margin-bottom:24px; line-height:1.5;}
+  .modal-actions{display:flex; gap:12px; justify-content:center; flex-wrap:wrap;}
+
+  .toast-stack{position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:600; display:flex; flex-direction:column; gap:10px; align-items:center;}
+  .toast{background:var(--dark-purple); color:#fff; padding:13px 24px; border-radius:100px; font-size:0.88rem; font-weight:600; box-shadow:0 14px 30px -12px rgba(51,38,77,0.5); animation:toastIn .35s cubic-bezier(.2,.8,.2,1) both;}
+  .toast.leaving{animation:toastOut .3s ease both;}
+  @keyframes toastIn{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
+  @keyframes toastOut{to{opacity:0; transform:translateY(10px);}}
+
+  footer{padding:44px 0 28px; border-top:1px solid var(--border); text-align:center;}
+  footer p{color:var(--muted); font-size:0.84rem;}
+  body.focus-mode footer{display:none;}
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 980px){
+    .editor-layout{grid-template-columns:1fr;}
+    .prompt-panel{position:static;}
+    .entries-grid{grid-template-columns:repeat(2, 1fr);}
+    .stats-row{grid-template-columns:repeat(3,1fr);}
+  }
+  @media (max-width: 720px){
+    .nav-links{display:none;}
+    .hamburger{display:flex;}
+    .entries-grid{grid-template-columns:1fr;}
+    .stats-row{grid-template-columns:1fr 1fr;}
+    .stats-row .stat-card:nth-child(3){grid-column:span 2;}
+    .editor-main{padding:24px 18px;}
+    .save-row{flex-direction:column-reverse;}
+    .save-row .btn{width:100%;}
+    .entry-detail{padding:30px 22px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<header id="site-header">
+  <nav class="wrap">
+    <a href="./mindbloom.html" class="logo">🌱 MindBloom</a>
+    <ul class="nav-links">
+      <li><a href="./mindbloom.html">Home</a></li>
+      <li><a href="./mindbloom-journal.html" class="active">Journal</a></li>
+      <li><a href="./mindbloom-meditation.html">Meditation</a></li>
+      <li><a href="./mindbloom-mood-check.html">Mood Check</a></li>
+    </ul>
+    <div class="nav-icons">
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="./mindbloom.html">Home</a>
+  <a href="./mindbloom-journal.html" style="color:#8770D6;">Journal</a>
+  <a href="./mindbloom-meditation.html">Meditation</a>
+  <a href="./mindbloom-mood-check.html">Mood Check</a>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero wrap-narrow">
+  <p class="eyebrow">YOUR PRIVATE SPACE</p>
+  <svg class="hero-deco" viewBox="0 0 100 100" fill="none">
+    <circle cx="50" cy="60" r="8" fill="#8B6B4A"/>
+    <path d="M50 60 L50 30" stroke="#8FB483" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="36" cy="40" rx="12" ry="7" fill="#8FB483" transform="rotate(-25 36 40)"/>
+    <ellipse cx="64" cy="34" rx="12" ry="7" fill="#8FB483" transform="rotate(25 64 34)"/>
+    <g transform="translate(50,20)"><circle r="8" fill="#F4D9E8"/><circle r="7" cy="10" cx="-9" fill="#F4D9E8"/><circle r="7" cy="10" cx="9" fill="#F4D9E8"/><circle r="5" cy="4" fill="#F4C765"/></g>
+  </svg>
+  <h1>Write it down. Let it breathe.</h1>
+  <p class="sub">Some thoughts become lighter when you give them somewhere to go.</p>
+  <p class="hero-tag">Your thoughts belong here.</p>
+</section>
+
+<!-- ============ LIBRARY VIEW ============ -->
+<main class="wrap" id="libraryView">
+  <div id="draftBannerHolder"></div>
+
+  <div class="create-cta">
+    <h2>✍️ New Journal Entry</h2>
+    <p>There's no perfect way to begin. One honest sentence is enough.</p>
+    <button class="btn btn-primary" id="newEntryBtn">Start Writing →</button>
+  </div>
+
+  <div class="stats-row" id="statsRow"></div>
+  <div class="streak-card" id="streakCard"></div>
+
+  <div class="calendar-card" id="calendarCard"></div>
+
+  <div class="library-head">
+    <h2>Your Journal</h2>
+    <p>A collection of thoughts, moments and little pieces of you.</p>
+  </div>
+
+  <div class="library-toolbar">
+    <div class="search-box">
+      <span>🔍</span>
+      <input type="text" id="searchInput" placeholder="Search your journal..." aria-label="Search your journal">
+    </div>
+  </div>
+  <div class="filter-row" id="filterRow"></div>
+
+  <div id="dayFilterHolder"></div>
+
+  <div id="entriesHolder"></div>
+</main>
+
+<!-- ============ EDITOR VIEW ============ -->
+<main class="wrap" id="editorView">
+  <div class="editor-topbar">
+    <button class="btn btn-ghost btn-sm" id="editorBackBtn">← Back</button>
+    <span class="etitle serif" id="editorTitleLabel">New Entry</span>
+    <div class="editor-topbar-right">
+      <span class="autosave-status" id="autosaveStatus"><span class="dotpulse"></span> <span id="autosaveText">Ready</span></span>
+      <button class="btn btn-ghost btn-sm focus-toggle" id="focusToggleBtn">Focus Mode ⛶</button>
+      <button class="btn btn-primary btn-sm" id="saveEntryBtnTop">Save Entry ✓</button>
+    </div>
+  </div>
+
+  <div class="editor-layout">
+    <div class="editor-main">
+      <input type="text" class="title-input" id="titleInput" placeholder="Give this moment a name..." maxlength="120">
+
+      <div class="mood-section">
+        <h3>How are you feeling?</h3>
+        <div class="mood-picker" id="moodPicker"></div>
+      </div>
+
+      <div class="mode-selector" id="modeSelector"></div>
+
+      <!-- FREE WRITE -->
+      <div id="freeWriteBlock">
+        <div class="toolbar">
+          <button class="tool-btn" data-cmd="bold" title="Bold" aria-label="Bold"><b>B</b></button>
+          <button class="tool-btn" data-cmd="italic" title="Italic" aria-label="Italic"><i>I</i></button>
+          <button class="tool-btn" data-cmd="underline" title="Underline" aria-label="Underline"><u>U</u></button>
+          <button class="tool-btn" data-cmd="insertUnorderedList" title="Bullet list" aria-label="Bullet list">•≡</button>
+          <button class="tool-btn" data-cmd="insertOrderedList" title="Numbered list" aria-label="Numbered list">1.≡</button>
+          <button class="tool-btn" data-cmd="removeFormat" title="Clear formatting" aria-label="Clear formatting">✕</button>
+        </div>
+        <div class="editor-area" id="editorArea" contenteditable="true" data-placeholder="Start writing whatever comes to mind..." aria-label="Journal writing area"></div>
+      </div>
+
+      <!-- GUIDED -->
+      <div class="guided-block" id="guidedBlock">
+        <div class="qa-item"><label>1. What happened?</label><textarea id="guided1" placeholder="Write freely..."></textarea></div>
+        <div class="qa-item"><label>2. How did it make you feel?</label><textarea id="guided2" placeholder="Write freely..."></textarea></div>
+        <div class="qa-item"><label>3. What do you need now?</label><textarea id="guided3" placeholder="Write freely..."></textarea></div>
+      </div>
+
+      <!-- GRATITUDE -->
+      <div class="gratitude-block" id="gratitudeBlock">
+        <div class="qa-item">
+          <label>Today I'm grateful for...</label>
+          <div class="gratitude-list">
+            <input type="text" id="grat1" placeholder="1.">
+            <input type="text" id="grat2" placeholder="2.">
+            <input type="text" id="grat3" placeholder="3.">
+          </div>
+        </div>
+        <div class="qa-item"><label>One small thing that made me smile:</label><textarea id="gratSmile" placeholder="Write freely..."></textarea></div>
+      </div>
+
+      <!-- REFLECTION -->
+      <div class="reflection-block" id="reflectionBlock">
+        <h3 style="margin-bottom:-6px;">Pause &amp; Reflect</h3>
+        <div class="qa-item"><label>What went well today?</label><textarea id="ref1"></textarea></div>
+        <div class="qa-item"><label>If you could master one new skill over night what would you choose?</label><textarea id="ref4"></textarea></div>
+        <div class="qa-item"><label>What felt difficult?</label><textarea id="ref2"></textarea></div>
+        <div class="qa-item"><label>What is a piece of advice you completely ignored at the time but later realized was exactly right?</label><textarea id="ref8"></textarea></div>
+        <div class="qa-item"><label>What am I proud of?</label><textarea id="ref5"></textarea></div>
+        <div class="qa-item"><label>What is it that can instantly lift your mood?</label><textarea id="ref6"></textarea></div>
+        <div class="qa-item"><label>What is something you've been avoiding that you'd like to address?</label><textarea id="ref7"></textarea></div>
+        <div class="qa-item"><label>What did I learn about myself?</label><textarea id="ref3"></textarea></div>
+        <div class="qa-item"><label>Where would you like to go when you feel you don't belong anywhere?</label><textarea id="ref8"></textarea></div>
+        <div class="qa-item"><label>What do I want tomorrow to feel like?</label><textarea id="ref4"></textarea></div>
+        <div class="qa-item"><label>What is one thing I can do to make tomorrow better?</label><textarea id="ref9"></textarea></div>
+        <div class="qa-item"><label>What to do when you have potential but you are procastinating?</label><textarea id="ref10"></textarea></div>
+      </div>
+
+      <div class="editor-meta-row">
+        <span class="word-count" id="wordCount">0 words · 0 characters</span>
+        <span class="word-count" id="readingTime">Reading time: ~0 min</span>
+      </div>
+
+      <div class="save-row">
+        <button class="btn btn-ghost" id="cancelEditBtn">Cancel</button>
+        <button class="btn btn-primary" id="saveEntryBtn">Save Entry ✓</button>
+      </div>
+    </div>
+
+    <aside class="prompt-panel">
+      <h3>Need a little inspiration?</h3>
+      <p class="prompt-text" id="promptText"></p>
+      <div class="prompt-actions">
+        <button class="btn btn-ghost btn-sm" id="newPromptBtn">Give me another prompt ↻</button>
+        <button class="btn btn-primary btn-sm" id="usePromptBtn">Use this prompt</button>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<!-- ============ ENTRY DETAIL VIEW ============ -->
+<main class="wrap-narrow" id="entryView">
+  <button class="btn btn-ghost btn-sm" id="entryBackBtn" style="margin-bottom:24px;">← Back to Journal</button>
+  <div class="entry-detail" id="entryDetailContent"></div>
+</main>
+
+<footer id="siteFooter">
+  <p>© 2026 MindBloom. Made with care for growing minds.</p>
+</footer>
+
+<!-- ============ DELETE MODAL ============ -->
+<div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteTitle">
+  <div class="modal-box">
+    <h3 id="deleteTitle">Delete this entry?</h3>
+    <p>This thought will be permanently removed from this device.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="cancelDeleteBtn">Cancel</button>
+      <button class="btn btn-danger" id="confirmDeleteBtn">Delete Entry</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+<script>
+/* ============ DATA ============ */
+const MOODS = [
+  {id:'Happy', emoji:'😊'}, {id:'Calm', emoji:'😌'}, {id:'Sad', emoji:'😔'}, {id:'Anxious', emoji:'😰'},
+  {id:'Frustrated', emoji:'😤'}, {id:'Tired', emoji:'😴'}, {id:'Confused', emoji:'💭'}, {id:'Motivated', emoji:'🔥'},
+  {id:'Grateful', emoji:'❤️'}, {id:'Hopeful', emoji:'🌱'}
+];
+const MODES = ['Free Write', 'Guided', 'Gratitude', 'Reflection'];
+const PROMPTS = [
+  'What is something your mind has been trying to tell you lately?',
+  'What made today feel a little better?',
+  'What are you holding onto that you might be ready to release?',
+  'What would you tell your younger self today?',
+  "What are three things you don't want to take for granted?",
+  'What do you need more of in your life right now?'
+];
+const FILTERS = [
+  {id:'all', label:'All'}, {id:'favorites', label:'Favorites'}, {id:'Happy', label:'Happy'}, {id:'Calm', label:'Calm'},
+  {id:'Sad', label:'Sad'}, {id:'Anxious', label:'Anxious'}, {id:'Tired', label:'Tired'}, {id:'Grateful', label:'Grateful'},
+  {id:'Reflection', label:'Reflection'}
+];
+
+const ENTRIES_KEY = 'mindbloom_journal_entries';
+const DRAFT_KEY = 'mindbloom_journal_draft';
+
+/* ============ STATE ============ */
+let editorState = {editingId:null, mood:null, mode:'Free Write'};
+let activeFilter = 'all';
+let searchQuery = '';
+let dayFilter = null;
+let currentPrompt = PROMPTS[0];
+let autosaveTimer = null;
+
+/* ============ NAVBAR ============ */
+const header = document.getElementById('site-header');
+window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 20), {passive:true});
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => { const o = mobileMenu.classList.toggle('open'); hamburger.setAttribute('aria-expanded', o); });
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+/* ============ STORAGE HELPERS ============ */
+function loadEntries(){
+  try{ const raw = localStorage.getItem(ENTRIES_KEY); return raw ? JSON.parse(raw) : []; }catch(e){ return []; }
+}
+function saveEntries(entries){ localStorage.setItem(ENTRIES_KEY, JSON.stringify(entries)); }
+function loadDraft(){
+  try{ const raw = localStorage.getItem(DRAFT_KEY); return raw ? JSON.parse(raw) : null; }catch(e){ return null; }
+}
+function saveDraft(draft){ localStorage.setItem(DRAFT_KEY, JSON.stringify(draft)); }
+function clearDraft(){ localStorage.removeItem(DRAFT_KEY); }
+
+/* ============ TOAST ============ */
+function showToast(message){
+  const stack = document.getElementById('toastStack');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  stack.appendChild(toast);
+  setTimeout(() => { toast.classList.add('leaving'); setTimeout(() => toast.remove(), 300); }, 3000);
+}
+
+/* ============ VIEW SWITCHING ============ */
+function showView(view){
+  document.getElementById('libraryView').style.display = view === 'library' ? 'block' : 'none';
+  document.getElementById('editorView').style.display = view === 'editor' ? 'block' : 'none';
+  document.getElementById('entryView').style.display = view === 'entry' ? 'block' : 'none';
+  document.querySelector('.hero').style.display = view === 'library' ? 'block' : 'none';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ============ WORD / CHAR COUNT ============ */
+function getCurrentText(){
+  if(editorState.mode === 'Free Write'){
+    return document.getElementById('editorArea').innerText.trim();
+  }
+  if(editorState.mode === 'Guided'){
+    return [guided1.value, guided2.value, guided3.value].join(' ');
+  }
+  if(editorState.mode === 'Gratitude'){
+    return [grat1.value, grat2.value, grat3.value, gratSmile.value].join(' ');
+  }
+  if(editorState.mode === 'Reflection'){
+    return [ref1.value, ref2.value, ref3.value, ref4.value].join(' ');
+  }
+  return '';
+}
+function updateWordCount(){
+  const text = getCurrentText();
+  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const chars = text.length;
+  document.getElementById('wordCount').textContent = `${words} words · ${chars} characters`;
+  const mins = Math.max(1, Math.round(words / 200));
+  document.getElementById('readingTime').textContent = `Reading time: ~${words === 0 ? 0 : mins} min`;
+}
+
+/* ============ MOOD PICKER ============ */
+function renderMoodPicker(){
+  const el = document.getElementById('moodPicker');
+  el.innerHTML = MOODS.map(m => `<button type="button" class="mood-opt" data-id="${m.id}" aria-pressed="false">${m.emoji} ${m.id}</button>`).join('');
+  el.querySelectorAll('.mood-opt').forEach(btn => btn.addEventListener('click', () => {
+    editorState.mood = btn.dataset.id;
+    el.querySelectorAll('.mood-opt').forEach(b => { b.classList.toggle('selected', b === btn); b.setAttribute('aria-pressed', b === btn); });
+    scheduleAutosave();
+  }));
+}
+function setMoodSelection(moodId){
+  editorState.mood = moodId;
+  document.querySelectorAll('.mood-opt').forEach(b => { const sel = b.dataset.id === moodId; b.classList.toggle('selected', sel); b.setAttribute('aria-pressed', sel); });
+}
+
+/* ============ MODE SELECTOR ============ */
+function renderModeSelector(){
+  const el = document.getElementById('modeSelector');
+  el.innerHTML = MODES.map(m => `<button type="button" class="mode-btn" data-mode="${m}">${m}</button>`).join('');
+  el.querySelectorAll('.mode-btn').forEach(btn => btn.addEventListener('click', () => setWritingMode(btn.dataset.mode)));
+}
+function setWritingMode(mode){
+  editorState.mode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  document.getElementById('freeWriteBlock').style.display = mode === 'Free Write' ? 'block' : 'none';
+  document.getElementById('guidedBlock').style.display = mode === 'Guided' ? 'flex' : 'none';
+  document.getElementById('gratitudeBlock').style.display = mode === 'Gratitude' ? 'flex' : 'none';
+  document.getElementById('reflectionBlock').style.display = mode === 'Reflection' ? 'flex' : 'none';
+  document.querySelector('.prompt-panel').style.display = mode === 'Free Write' ? 'block' : 'none';
+  updateWordCount();
+  scheduleAutosave();
+}
+
+/* ============ TOOLBAR ============ */
+document.querySelectorAll('.tool-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('editorArea').focus();
+    document.execCommand(btn.dataset.cmd, false, null);
+  });
+});
+document.getElementById('editorArea').addEventListener('input', () => { updateWordCount(); scheduleAutosave(); });
+['guided1','guided2','guided3','grat1','grat2','grat3','gratSmile','ref1','ref2','ref3','ref4'].forEach(id => {
+  document.getElementById(id).addEventListener('input', () => { updateWordCount(); scheduleAutosave(); });
+});
+document.getElementById('titleInput').addEventListener('input', scheduleAutosave);
+
+/* ============ PROMPTS ============ */
+function renderPrompt(exclude){
+  let p;
+  do{ p = PROMPTS[Math.floor(Math.random() * PROMPTS.length)]; } while(PROMPTS.length > 1 && p === exclude);
+  currentPrompt = p;
+  document.getElementById('promptText').textContent = `"${p}"`;
+}
+document.getElementById('newPromptBtn').addEventListener('click', () => renderPrompt(currentPrompt));
+document.getElementById('usePromptBtn').addEventListener('click', () => {
+  const area = document.getElementById('editorArea');
+  area.innerHTML = `<p>Prompt:<br>${escapeHtml(currentPrompt)}</p><p>My thoughts:<br></p>`;
+  area.focus();
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  const range = document.createRange();
+  range.selectNodeContents(area);
+  range.collapse(false);
+  sel.addRange(range);
+  updateWordCount();
+  scheduleAutosave();
+});
+
+/* ============ AUTOSAVE ============ */
+function scheduleAutosave(){
+  setAutosaveStatus('Writing...');
+  clearTimeout(autosaveTimer);
+  autosaveTimer = setTimeout(doAutosave, 1400);
+}
+function setAutosaveStatus(text){ document.getElementById('autosaveText').textContent = text; }
+function doAutosave(){
+  const title = document.getElementById('titleInput').value.trim();
+  const text = getCurrentText().trim();
+  if(!title && !text){ setAutosaveStatus('Ready'); return; }
+  setAutosaveStatus('Saving...');
+  const draft = {
+    editingId: editorState.editingId,
+    title,
+    mood: editorState.mood,
+    mode: editorState.mode,
+    freeHtml: document.getElementById('editorArea').innerHTML,
+    guided: [guided1.value, guided2.value, guided3.value],
+    gratitude: [grat1.value, grat2.value, grat3.value, gratSmile.value],
+    reflection: [ref1.value, ref2.value, ref3.value, ref4.value],
+    savedAt: new Date().toISOString()
+  };
+  saveDraft(draft);
+  setTimeout(() => setAutosaveStatus('Saved just now ✓'), 350);
+}
+
+/* ============ COMPOSE FINAL CONTENT ============ */
+function composeContent(){
+  if(editorState.mode === 'Free Write') return document.getElementById('editorArea').innerText.trim();
+  if(editorState.mode === 'Guided') return `What happened?\n${guided1.value.trim()}\n\nHow did it make you feel?\n${guided2.value.trim()}\n\nWhat do you need now?\n${guided3.value.trim()}`;
+  if(editorState.mode === 'Gratitude') return `Today I'm grateful for...\n1. ${grat1.value.trim()}\n2. ${grat2.value.trim()}\n3. ${grat3.value.trim()}\n\nOne small thing that made me smile:\n${gratSmile.value.trim()}`;
+  if(editorState.mode === 'Reflection') return `What went well today?\n${ref1.value.trim()}\n\nWhat felt difficult?\n${ref2.value.trim()}\n\nWhat did I learn about myself?\n${ref3.value.trim()}\n\nWhat do I want tomorrow to feel like?\n${ref4.value.trim()}`;
+  return '';
+}
+
+/* ============ OPEN / RESET EDITOR ============ */
+function openNewEntry(){
+  editorState = {editingId:null, mood:null, mode:'Free Write'};
+  document.getElementById('editorTitleLabel').textContent = 'New Entry';
+  document.getElementById('titleInput').value = '';
+  document.getElementById('editorArea').innerHTML = '';
+  ['guided1','guided2','guided3','grat1','grat2','grat3','gratSmile','ref1','ref2','ref3','ref4'].forEach(id => document.getElementById(id).value = '');
+  document.querySelectorAll('.mood-opt').forEach(b => { b.classList.remove('selected'); b.setAttribute('aria-pressed','false'); });
+  setWritingMode('Free Write');
+  renderPrompt();
+  setAutosaveStatus('Ready');
+  updateWordCount();
+  showView('editor');
+}
+
+function openEditEntry(entry){
+  editorState = {editingId:entry.id, mood:entry.mood, mode:entry.mode || 'Free Write'};
+  document.getElementById('editorTitleLabel').textContent = 'Edit Entry';
+  document.getElementById('titleInput').value = entry.title;
+  document.getElementById('editorArea').innerHTML = entry.mode === 'Free Write' || !entry.mode ? escapeHtml(entry.content).replace(/\n/g,'<br>') : '';
+  setMoodSelection(entry.mood);
+  setWritingMode(entry.mode || 'Free Write');
+  renderPrompt();
+  setAutosaveStatus('Ready');
+  updateWordCount();
+  showView('editor');
+}
+
+function openDraftInEditor(draft){
+  editorState = {editingId: draft.editingId, mood: draft.mood, mode: draft.mode || 'Free Write'};
+  document.getElementById('editorTitleLabel').textContent = draft.editingId ? 'Edit Entry' : 'New Entry';
+  document.getElementById('titleInput').value = draft.title || '';
+  document.getElementById('editorArea').innerHTML = draft.freeHtml || '';
+  if(draft.guided){ guided1.value = draft.guided[0]||''; guided2.value = draft.guided[1]||''; guided3.value = draft.guided[2]||''; }
+  if(draft.gratitude){ grat1.value = draft.gratitude[0]||''; grat2.value = draft.gratitude[1]||''; grat3.value = draft.gratitude[2]||''; gratSmile.value = draft.gratitude[3]||''; }
+  if(draft.reflection){ ref1.value = draft.reflection[0]||''; ref2.value = draft.reflection[1]||''; ref3.value = draft.reflection[2]||''; ref4.value = draft.reflection[3]||''; }
+  if(draft.mood) setMoodSelection(draft.mood);
+  setWritingMode(draft.mode || 'Free Write');
+  renderPrompt();
+  setAutosaveStatus('Ready');
+  updateWordCount();
+  showView('editor');
+}
+
+document.getElementById('newEntryBtn').addEventListener('click', openNewEntry);
+document.getElementById('editorBackBtn').addEventListener('click', () => { exitFocusMode(); showView('library'); refreshLibrary(); });
+document.getElementById('cancelEditBtn').addEventListener('click', () => { exitFocusMode(); showView('library'); refreshLibrary(); });
+
+/* ============ SAVE ENTRY ============ */
+function attemptSaveEntry(){
+  const title = document.getElementById('titleInput').value.trim();
+  const content = composeContent();
+  if(!title){ showToast('Please give this moment a name.'); document.getElementById('titleInput').focus(); return; }
+  if(!content){ showToast('Your journal needs a few words first.'); return; }
+
+  const entries = loadEntries();
+  const now = new Date().toISOString();
+
+  if(editorState.editingId){
+    const idx = entries.findIndex(e => e.id === editorState.editingId);
+    if(idx > -1){
+      entries[idx] = {...entries[idx], title, content, mood: editorState.mood, mode: editorState.mode, tags:[editorState.mode], updatedAt: now};
+      saveEntries(entries);
+      showToast('Entry updated ✓');
+    }
+  } else {
+    const entry = {
+      id: Date.now(), title, content, mood: editorState.mood, mode: editorState.mode,
+      tags:[editorState.mode], favorite:false, createdAt: now, updatedAt: now
+    };
+    entries.unshift(entry);
+    saveEntries(entries);
+    showToast('Your thoughts have been saved 🌱');
+  }
+  clearDraft();
+  exitFocusMode();
+  showView('library');
+  refreshLibrary();
+}
+document.getElementById('saveEntryBtn').addEventListener('click', attemptSaveEntry);
+document.getElementById('saveEntryBtnTop').addEventListener('click', attemptSaveEntry);
+
+/* ============ FOCUS MODE ============ */
+function toggleFocusMode(){
+  const active = document.body.classList.toggle('focus-mode');
+  document.getElementById('focusToggleBtn').textContent = active ? 'Exit Focus Mode' : 'Focus Mode ⛶';
+}
+function exitFocusMode(){
+  document.body.classList.remove('focus-mode');
+  document.getElementById('focusToggleBtn').textContent = 'Focus Mode ⛶';
+}
+document.getElementById('focusToggleBtn').addEventListener('click', toggleFocusMode);
+
+/* ============ KEYBOARD SHORTCUTS ============ */
+document.addEventListener('keydown', (e) => {
+  if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's' && document.getElementById('editorView').style.display === 'block'){
+    e.preventDefault();
+    attemptSaveEntry();
+  }
+  if(e.key === 'Escape'){
+    if(document.getElementById('deleteModal').classList.contains('open')) closeDeleteModal();
+    else if(document.body.classList.contains('focus-mode')) exitFocusMode();
+  }
+});
+
+/* ============ ESCAPE HTML ============ */
+function escapeHtml(str){ const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+
+/* ============ DRAFT BANNER ============ */
+function renderDraftBanner(){
+  const holder = document.getElementById('draftBannerHolder');
+  const draft = loadDraft();
+  if(!draft){ holder.innerHTML = ''; return; }
+  holder.innerHTML = `
+    <div class="draft-banner">
+      <div class="dtext"><strong>You have an unfinished thought.</strong><span>Last touched ${timeAgo(draft.savedAt)}${draft.title ? ' · "' + escapeHtml(draft.title) + '"' : ''}</span></div>
+      <div class="draft-actions">
+        <button class="btn btn-ghost btn-sm" id="discardDraftBtn">Discard Draft</button>
+        <button class="btn btn-primary btn-sm" id="continueDraftBtn">Continue Writing</button>
+      </div>
+    </div>`;
+  document.getElementById('continueDraftBtn').addEventListener('click', () => openDraftInEditor(draft));
+  document.getElementById('discardDraftBtn').addEventListener('click', () => { clearDraft(); renderDraftBanner(); showToast('Draft discarded.'); });
+}
+function timeAgo(iso){
+  const diffMin = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
+  if(diffMin < 1) return 'just now';
+  if(diffMin < 60) return `${diffMin} min ago`;
+  const diffH = Math.round(diffMin/60);
+  if(diffH < 24) return `${diffH} hr ago`;
+  return new Date(iso).toLocaleDateString('en-US', {month:'short', day:'numeric'});
+}
+
+/* ============ STATS ============ */
+function computeStats(entries){
+  const totalWords = entries.reduce((sum, e) => sum + (e.content ? e.content.trim().split(/\s+/).filter(Boolean).length : 0), 0);
+  const moodCounts = {};
+  entries.forEach(e => { if(e.mood) moodCounts[e.mood] = (moodCounts[e.mood]||0) + 1; });
+  let favMood = null, max = 0;
+  Object.entries(moodCounts).forEach(([k,v]) => { if(v > max){ max = v; favMood = k; } });
+  return {total: entries.length, words: totalWords, favMood};
+}
+function renderStats(entries){
+  const s = computeStats(entries);
+  const favMoodObj = MOODS.find(m => m.id === s.favMood);
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat-card"><div class="snum">${s.total}</div><div class="slabel">Entries</div></div>
+    <div class="stat-card"><div class="snum">${s.words.toLocaleString()}</div><div class="slabel">Words</div></div>
+    <div class="stat-card"><div class="snum">${favMoodObj ? favMoodObj.emoji : '—'}</div><div class="slabel">${favMoodObj ? favMoodObj.id : 'Favorite Mood'}</div></div>`;
+}
+
+/* ============ STREAK ============ */
+function computeStreak(entries){
+  if(entries.length === 0) return {streak:0, thisMonth:0};
+  const days = [...new Set(entries.map(e => new Date(e.createdAt).toDateString()))]
+    .map(d => new Date(d)).sort((a,b) => b - a);
+  let streak = 0;
+  let cursor = new Date(); cursor.setHours(0,0,0,0);
+  const mostRecent = days[0];
+  const diffFromToday = Math.round((cursor - mostRecent) / 86400000);
+  if(diffFromToday <= 1){
+    streak = 1;
+    for(let i = 1; i < days.length; i++){
+      const expected = new Date(days[i-1]); expected.setDate(expected.getDate() - 1);
+      if(days[i].toDateString() === expected.toDateString()) streak++;
+      else break;
+    }
+  }
+  const now = new Date();
+  const thisMonth = entries.filter(e => { const d = new Date(e.createdAt); return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear(); }).length;
+  return {streak, thisMonth};
+}
+function renderStreak(entries){
+  const el = document.getElementById('streakCard');
+  if(entries.length === 0){
+    el.innerHTML = `<div><h3>Your Writing Rhythm</h3><p>Start writing to build your rhythm.</p></div>`;
+    return;
+  }
+  const {streak, thisMonth} = computeStreak(entries);
+  el.innerHTML = `
+    <div><h3>Your Writing Rhythm</h3><p>Consistency, not perfection, is what builds this.</p></div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <span class="streak-pill">🔥 ${streak} day streak</span>
+      <span class="streak-pill">${thisMonth} entries this month</span>
+    </div>`;
+}
+
+/* ============ CALENDAR ============ */
+function renderCalendar(entries){
+  const el = document.getElementById('calendarCard');
+  const now = new Date();
+  const year = now.getFullYear(), month = now.getMonth();
+  const monthName = now.toLocaleDateString('en-US', {month:'long', year:'numeric'});
+  const firstDay = new Date(year, month, 1);
+  const startOffset = (firstDay.getDay() + 6) % 7; // Monday-start
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const entryDays = new Set(entries.map(e => new Date(e.createdAt).toDateString()));
+  const todayStr = now.toDateString();
+
+  let cells = '';
+  for(let i = 0; i < startOffset; i++) cells += `<div class="cal-day blank"></div>`;
+  for(let d = 1; d <= daysInMonth; d++){
+    const dateObj = new Date(year, month, d);
+    const dStr = dateObj.toDateString();
+    const has = entryDays.has(dStr);
+    const isToday = dStr === todayStr;
+    const isSelected = dayFilter === dStr;
+    cells += `<div class="cal-day ${has ? 'has-entry':''} ${isToday ? 'today':''} ${isSelected ? 'selected':''}"><button type="button" data-date="${dStr}" aria-label="${dateObj.toDateString()}${has ? ', has entries':''}">${d}</button></div>`;
+  }
+
+  el.innerHTML = `
+    <h2>Your Journal Days</h2>
+    <p class="cal-month">${monthName}</p>
+    <div class="cal-grid">
+      <div class="cal-dow">Mo</div><div class="cal-dow">Tu</div><div class="cal-dow">We</div><div class="cal-dow">Th</div><div class="cal-dow">Fr</div><div class="cal-dow">Sa</div><div class="cal-dow">Su</div>
+      ${cells}
+    </div>`;
+  el.querySelectorAll('.cal-day button').forEach(btn => btn.addEventListener('click', () => {
+    const d = btn.dataset.date;
+    dayFilter = dayFilter === d ? null : d;
+    refreshLibrary();
+  }));
+}
+
+/* ============ FILTERS ============ */
+function renderFilterRow(){
+  const el = document.getElementById('filterRow');
+  el.innerHTML = FILTERS.map(f => `<button type="button" class="filter-chip ${f.id === activeFilter ? 'active':''}" data-id="${f.id}">${f.label}</button>`).join('');
+  el.querySelectorAll('.filter-chip').forEach(btn => btn.addEventListener('click', () => {
+    activeFilter = btn.dataset.id;
+    refreshLibrary();
+  }));
+}
+
+/* ============ SEARCH ============ */
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  searchQuery = e.target.value.toLowerCase();
+  refreshLibrary();
+});
+
+/* ============ ENTRIES RENDER ============ */
+function matchesFilter(entry){
+  if(activeFilter === 'all') return true;
+  if(activeFilter === 'favorites') return !!entry.favorite;
+  if(activeFilter === 'Reflection') return entry.mode === 'Reflection' || (entry.tags||[]).includes('Reflection');
+  return entry.mood === activeFilter;
+}
+function matchesSearch(entry){
+  if(!searchQuery) return true;
+  const hay = [entry.title, entry.content, entry.mood, ...(entry.tags||[])].join(' ').toLowerCase();
+  return hay.includes(searchQuery);
+}
+function matchesDay(entry){
+  if(!dayFilter) return true;
+  return new Date(entry.createdAt).toDateString() === dayFilter;
+}
+
+function readingTimeFor(content){
+  const words = content.trim() ? content.trim().split(/\s+/).length : 0;
+  return Math.max(1, Math.round(words / 200));
+}
+
+function renderDayFilterTag(){
+  const holder = document.getElementById('dayFilterHolder');
+  if(!dayFilter){ holder.innerHTML = ''; return; }
+  const label = new Date(dayFilter).toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
+  holder.innerHTML = `<div class="day-filter-tag">Showing entries from ${label} <button id="clearDayFilter" aria-label="Clear date filter">✕</button></div>`;
+  document.getElementById('clearDayFilter').addEventListener('click', () => { dayFilter = null; refreshLibrary(); });
+}
+
+function renderEntries(){
+  const all = loadEntries();
+  const filtered = all.filter(e => matchesFilter(e) && matchesSearch(e) && matchesDay(e));
+  const holder = document.getElementById('entriesHolder');
+
+  if(all.length === 0){
+    holder.innerHTML = `
+      <div class="empty-state">
+        <div class="eicon">🌱</div>
+        <h2>Your first page is waiting.</h2>
+        <p>There is no perfect way to journal. Start with one honest sentence.</p>
+        <button class="btn btn-primary" id="firstEntryBtn">Write My First Entry</button>
+      </div>`;
+    document.getElementById('firstEntryBtn').addEventListener('click', openNewEntry);
+    return;
+  }
+
+  if(filtered.length === 0){
+    holder.innerHTML = `
+      <div class="empty-state">
+        <div class="eicon">🔍</div>
+        <h2>No thoughts found.</h2>
+        <p>Try another word or start a new entry.</p>
+        <button class="btn btn-primary" id="searchEmptyNewBtn">New Entry</button>
+      </div>`;
+    document.getElementById('searchEmptyNewBtn').addEventListener('click', openNewEntry);
+    return;
+  }
+
+  holder.innerHTML = `<div class="entries-grid">${filtered.map(e => {
+    const m = MOODS.find(mm => mm.id === e.mood) || {emoji:'💭'};
+    const preview = (e.content || '').slice(0, 130);
+    const dateStr = new Date(e.createdAt).toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
+    return `
+    <div class="entry-card">
+      <div class="entry-top">
+        <span class="entry-mood">${m.emoji} ${e.mood || ''}</span>
+        <button class="fav-btn" data-id="${e.id}" aria-label="${e.favorite ? 'Remove from favorites' : 'Add to favorites'}">${e.favorite ? '❤️' : '♡'}</button>
+      </div>
+      <h3>${escapeHtml(e.title)}</h3>
+      <p class="entry-preview">${escapeHtml(preview)}</p>
+      <p class="entry-meta">${dateStr} · ${readingTimeFor(e.content||'')} min read</p>
+      <button class="entry-open" data-id="${e.id}">Open Entry →</button>
+    </div>`;
+  }).join('')}</div>`;
+
+  holder.querySelectorAll('.fav-btn').forEach(btn => btn.addEventListener('click', () => toggleFavorite(Number(btn.dataset.id))));
+  holder.querySelectorAll('.entry-open').forEach(btn => btn.addEventListener('click', () => openEntryDetail(Number(btn.dataset.id))));
+}
+
+function toggleFavorite(id){
+  const entries = loadEntries();
+  const idx = entries.findIndex(e => e.id === id);
+  if(idx === -1) return;
+  entries[idx].favorite = !entries[idx].favorite;
+  saveEntries(entries);
+  showToast(entries[idx].favorite ? 'Saved to favorites ♥' : 'Removed from favorites.');
+  refreshLibrary();
+  if(document.getElementById('entryView').style.display === 'block') openEntryDetail(id);
+}
+
+/* ============ ENTRY DETAIL ============ */
+let pendingDeleteId = null;
+function openEntryDetail(id){
+  const entries = loadEntries();
+  const e = entries.find(en => en.id === id);
+  if(!e) return;
+  const m = MOODS.find(mm => mm.id === e.mood) || {emoji:'💭'};
+  const dateStr = new Date(e.createdAt).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
+  document.getElementById('entryDetailContent').innerHTML = `
+    <div class="edmood">${m.emoji} ${e.mood || ''}</div>
+    <h1>${escapeHtml(e.title)}</h1>
+    <p class="eddate">${dateStr}</p>
+    <div class="entry-divider"></div>
+    <div class="entry-body">${escapeHtml(e.content)}</div>
+    <div class="entry-divider"></div>
+    <div class="entry-detail-actions">
+      <button class="btn btn-ghost" id="detailFavBtn">${e.favorite ? '❤️ Favorited' : '♡ Favorite'}</button>
+      <button class="btn btn-ghost" id="detailEditBtn">Edit Entry</button>
+      <button class="btn btn-danger" id="detailDeleteBtn">Delete Entry</button>
+    </div>`;
+  document.getElementById('detailFavBtn').addEventListener('click', () => toggleFavorite(e.id));
+  document.getElementById('detailEditBtn').addEventListener('click', () => openEditEntry(e));
+  document.getElementById('detailDeleteBtn').addEventListener('click', () => openDeleteModal(e.id));
+  showView('entry');
+}
+document.getElementById('entryBackBtn').addEventListener('click', () => { showView('library'); refreshLibrary(); });
+
+/* ============ DELETE MODAL ============ */
+function openDeleteModal(id){ pendingDeleteId = id; document.getElementById('deleteModal').classList.add('open'); }
+function closeDeleteModal(){ pendingDeleteId = null; document.getElementById('deleteModal').classList.remove('open'); }
+document.getElementById('cancelDeleteBtn').addEventListener('click', closeDeleteModal);
+document.getElementById('deleteModal').addEventListener('click', (e) => { if(e.target.id === 'deleteModal') closeDeleteModal(); });
+document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+  if(pendingDeleteId == null) return;
+  const entries = loadEntries().filter(e => e.id !== pendingDeleteId);
+  saveEntries(entries);
+  showToast('Entry deleted.');
+  closeDeleteModal();
+  showView('library');
+  refreshLibrary();
+});
+
+/* ============ REFRESH LIBRARY ============ */
+function refreshLibrary(){
+  const entries = loadEntries();
+  renderDraftBanner();
+  renderStats(entries);
+  renderStreak(entries);
+  renderCalendar(entries);
+  renderFilterRow();
+  renderDayFilterTag();
+  renderEntries();
+}
+
+/* ============ INIT ============ */
+renderMoodPicker();
+renderModeSelector();
+setWritingMode('Free Write');
+renderPrompt();
+refreshLibrary();
+showView('library');
+</script>
+</body>
+</html>
